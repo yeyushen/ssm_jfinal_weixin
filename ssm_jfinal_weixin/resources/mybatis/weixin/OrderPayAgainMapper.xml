@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderPayAgainMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_payagain_record
+	</sql>
+
+	
+	<!-- 二次充值订单列表 -->
+	
+	<select id="datalistPage" parameterType="page" resultType="pd">
+SELECT
+  e.order_id,
+  e.order_no,
+  e.openid,
+  e.phone,
+  e.settlement_price,
+  e.product_price,
+  e.chnnl_type,
+  e.note,
+  e.log,
+  e.paystatus,
+  e.settlement_method,
+  e.status,
+(SELECT rd.create_time FROM weixin_payagain_record rd WHERE rd.order_id=e.order_id ORDER BY create_time DESC LIMIT 1) create_time,
+	m.nick_name,
+	p.product_name,
+(SELECT COUNT(agin_id) FROM weixin_payagain_record rd WHERE rd.order_id=e.order_id) again_count
+FROM
+	weixin_payagain_record r
+INNER JOIN weixin_order e ON r.order_id = e.order_id
+INNER JOIN weixin_member m ON e.openid = m.openid
+LEFT JOIN weixin_product p ON e.product_id = p.product_id
+WHERE
+	1 = 1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			e.phone LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			e.order_id LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			p.product_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- or w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and create_time &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and create_time &lt;= #{pd.lastEnd}
+		</if>
+		GROUP BY e.order_id
+		ORDER BY create_time DESC
+	</select>
+	
+	<!-- 统计二次充值订单列表 -->
+	
+	<select id="countPayAgainOrder" parameterType="page" resultType="pd">
+SELECT
+	count(o.product_id) total,
+	IFNULL(
+		SUM(IFNULL(o.product_price, 0)),
+		0
+	) totalProductPrice,
+	IFNULL(
+		SUM(
+			IFNULL(o.settlement_price, 0)
+		),
+		0
+	) totalSettlementPrice,
+	IFNULL(
+		SUM(IFNULL(o.cost_price, 0)),
+		0
+	) totalCostPrice,
+	IFNULL(SUM(IFNULL(o.profit, 0)), 0) totalProfit
+FROM
+(
+SELECT
+  e.product_id,
+  e.product_price,
+  e.settlement_price,
+  e.cost_price,
+  e.profit,
+  e.phone,
+  p.product_name,
+  m.nick_name,
+(SELECT rd.create_time FROM weixin_payagain_record rd WHERE rd.order_id=e.order_id ORDER BY create_time DESC LIMIT 1) create_time 
+FROM
+	weixin_payagain_record r
+INNER JOIN weixin_order e ON r.order_id = e.order_id
+INNER JOIN weixin_member m ON e.openid = m.openid
+LEFT JOIN weixin_product p ON e.product_id = p.product_id
+GROUP BY e.order_id
+) o
+WHERE
+	1 = 1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			o.phone LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.product_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- or w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.create_time &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.create_time &lt;= #{pd.lastEnd}
+		</if>
+		ORDER BY o.create_time DESC
+	</select>
+
+
+<!-- 列出所有二次充值明细记录 -->	
+<select id="listDetails" parameterType="page" resultType="pd">
+SELECT
+	r.pay_log,
+	r.create_time,
+	r.create_name,
+	r.status,
+	o.phone,
+	m.nick_name,
+	p.product_name,
+	o.product_price
+FROM
+	weixin_payagain_record r
+LEFT JOIN weixin_order o ON r.order_id = o.order_id
+AND r.order_id = #{pd.order_id}
+INNER JOIN weixin_member m ON o.openid = m.openid
+LEFT JOIN weixin_product p ON o.product_id = p.product_id
+ORDER BY create_time DESC
+</select>	
+	
+
+</mapper>

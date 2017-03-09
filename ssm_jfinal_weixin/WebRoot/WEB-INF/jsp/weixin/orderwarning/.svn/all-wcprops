@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/1339/skywayct/WebRoot/WEB-INF/jsp/weixin/orderwarning
+END
+orderwarning_edit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/MyRepository/!svn/ver/1339/skywayct/WebRoot/WEB-INF/jsp/weixin/orderwarning/orderwarning_edit.jsp
+END
+orderwarning_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/MyRepository/!svn/ver/1339/skywayct/WebRoot/WEB-INF/jsp/weixin/orderwarning/orderwarning_list.jsp
+END
+orderwarning_show.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/MyRepository/!svn/ver/1339/skywayct/WebRoot/WEB-INF/jsp/weixin/orderwarning/orderwarning_show.jsp
+END

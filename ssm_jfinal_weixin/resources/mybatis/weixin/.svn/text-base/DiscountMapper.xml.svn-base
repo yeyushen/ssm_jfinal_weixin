@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DiscountMapper">
+	<!-- 分销返佣比例 -->
+		<!--表名 -->
+	<sql id="tableName">
+		weixin_commission_discount
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		discount_id,	
+		discount_1,
+		discount_2,
+		discount_3,	
+		discount_4,
+		discount_5,
+		discount_a,
+		discount_b
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{discount_id},
+		#{discount_2},	
+		#{discount_3},
+		#{discount_4},
+		#{discount_5},
+		#{discount_a},
+		#{discount_b}
+	</sql>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="pd" resultType="pd">
+		select
+	<include refid="Field"></include>
+		from 
+	<include refid="tableName"></include>
+	</select>
+	
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			discount_1 = #{discount_1},
+			discount_2 = #{discount_2},
+			discount_3 = #{discount_3},
+			discount_4 = #{discount_4},			
+			discount_5 = #{discount_5},
+			discount_a = #{discount_a},
+			discount_b = #{discount_b}
+	</update>
+	
+</mapper>

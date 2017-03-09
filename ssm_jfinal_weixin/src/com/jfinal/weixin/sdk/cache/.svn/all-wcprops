@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/cache
+END
+IAccessTokenCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/cache/IAccessTokenCache.java
+END
+DefaultAccessTokenCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/cache/DefaultAccessTokenCache.java
+END
+RedisAccessTokenCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/cache/RedisAccessTokenCache.java
+END

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/MyRepository/!svn/ver/1237/skywayct/resources/mybatis/system
+END
+ButtonrightsMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/system/ButtonrightsMapper.xml
+END
+DictionariesMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/system/DictionariesMapper.xml
+END
+CreateCodeMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/system/CreateCodeMapper.xml
+END
+UserMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/1237/skywayct/resources/mybatis/system/UserMapper.xml
+END
+AppuserMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/system/AppuserMapper.xml
+END
+FhsmsMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/system/FhsmsMapper.xml
+END
+RoleMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/1211/skywayct/resources/mybatis/system/RoleMapper.xml
+END
+MenuMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/1114/skywayct/resources/mybatis/system/MenuMapper.xml
+END
+FhbuttonMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/system/FhbuttonMapper.xml
+END
+NoticeBoardMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/645/skywayct/resources/mybatis/system/NoticeBoardMapper.xml
+END

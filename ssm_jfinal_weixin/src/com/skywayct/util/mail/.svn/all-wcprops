@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/MyRepository/!svn/ver/12/skywayct/src/com/skywayct/util/mail
+END
+MailSenderInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/12/skywayct/src/com/skywayct/util/mail/MailSenderInfo.java
+END
+MyAuthenticator.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/12/skywayct/src/com/skywayct/util/mail/MyAuthenticator.java
+END
+SimpleMailSender.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/12/skywayct/src/com/skywayct/util/mail/SimpleMailSender.java
+END

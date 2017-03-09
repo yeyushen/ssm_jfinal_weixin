@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/MyRepository/!svn/ver/3/skywayct/WebRoot/WEB-INF/jsp/information/pictures
+END
+pictures_add.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/MyRepository/!svn/ver/3/skywayct/WebRoot/WEB-INF/jsp/information/pictures/pictures_add.jsp
+END
+pictures_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/3/skywayct/WebRoot/WEB-INF/jsp/information/pictures/pictures_list.jsp
+END
+imageCrawler.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/MyRepository/!svn/ver/3/skywayct/WebRoot/WEB-INF/jsp/information/pictures/imageCrawler.jsp
+END
+pictures_edit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/3/skywayct/WebRoot/WEB-INF/jsp/information/pictures/pictures_edit.jsp
+END

@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event
+END
+EventInMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/EventInMsg.java
+END
+InLocationEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InLocationEvent.java
+END
+InCustomEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InCustomEvent.java
+END
+InQrCodeEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InQrCodeEvent.java
+END
+InVerifySuccessEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InVerifySuccessEvent.java
+END
+InPoiCheckNotifyEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InPoiCheckNotifyEvent.java
+END
+InWifiEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InWifiEvent.java
+END
+InShakearoundUserShakeEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InShakearoundUserShakeEvent.java
+END
+InVerifyFailEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InVerifyFailEvent.java
+END
+InFollowEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InFollowEvent.java
+END
+InTemplateMsgEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InTemplateMsgEvent.java
+END
+ScanCodeInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/ScanCodeInfo.java
+END
+InMassEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InMassEvent.java
+END
+InMenuEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/event/InMenuEvent.java
+END

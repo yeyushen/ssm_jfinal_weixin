@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Expires" CONTENT="0">  
+	<meta http-equiv="Cache-Control" CONTENT="no-cache">  
+	<meta http-equiv="Pragma" CONTENT="no-cache"> 
+	<meta name="viewport" content="width=device-width,user-scalable=yes, initial-scale=1" >
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="css/banstyles.css">
+
+<script src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
+<script src="js/banner.js"></script>
+
+</head>
+
+<body>
+<div class="banner" style="overflow:hidden">
+	<!--全屏滚动-->
+	<div id="wrapper" style="overflow: hidden;">
+	  <div id="scroller">
+	    <ul id="thelist">
+	    <li><div style="background: url(images/banner01.jpg) 0%/ 100% 100% no-repeat;"></div></li>
+	    <li><div style="background: url(images/banner02.gif) 0% 100% / 100% 100% no-repeat;"></div></li>
+	    <!-- <li><a href=""><div style="background: url(images/blackwidow.jpg) 0% 100% / 100% 100% no-repeat;"></div></a></li>
+	    <li><a href=""><div style="background: url(images/blackwidow.jpg) 0% 100% / 100% 100% no-repeat;"></div></a></li>
+	    <li><a href=""><div style="background: url(images/blackwidow.jpg) 50% 50% / auto 100% no-repeat;"></div></a></li>
+	     --></ul>
+	  </div>
+	</div>
+	<div id="nav">
+	  <ul id="indicator">
+	  	<li class="active" onclick="doscrollTopage(0)"></li>
+	  	<li class="" onclick="doscrollTopage(1)"></li>
+	  	<!-- <li class="" onclick="doscrollTopage(2)"></li>
+	  	<li class="" onclick="doscrollTopage(3)"></li>
+	  	<li class="" onclick="doscrollTopage(4)"></li> -->
+	  </ul>
+	</div>
+	<!--end 全屏滚动-->
+</div>
+<div class="toolbar ps_absolute">
+	<div onclick="goScroll(1)">平台介绍</div>
+	<div onclick="goScroll(2)">代理合作</div>
+	<div onclick="goScroll(3)">三级返利</div>
+</div>
+<div id="content1" class="content">
+	<img alt="" src="images/content1.gif" style="width:100%;">
+</div>
+<div id="content2" class="content">
+	<img alt="" src="images/content2.gif" style="width:100%;">
+</div>
+<div id="content3" class="content">
+	<img alt="" src="images/content3.png" style="width:100%;">
+</div>
+
+<div id="arrow_up" style="display: none;"><a href="#"><img src="images/slide_up.png" width="90px" height="90px" alt="回到顶部"></a></div>
+</body>
+</html>

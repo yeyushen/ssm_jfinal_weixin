@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api
+END
+ApiConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/ApiConfig.java
+END
+AccessToken.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/AccessToken.java
+END
+DatacubeApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/DatacubeApi.java
+END
+RedPackApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/RedPackApi.java
+END
+TemplateData.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/TemplateData.java
+END
+MediaArticles.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/MediaArticles.java
+END
+PaymentApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/7829/skywayct/src/com/jfinal/weixin/sdk/api/PaymentApi.java
+END
+QrcodeApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/QrcodeApi.java
+END
+ApiConfigKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/ApiConfigKit.java
+END
+UserApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/UserApi.java
+END
+ApiResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/6181/skywayct/src/com/jfinal/weixin/sdk/api/ApiResult.java
+END
+GroupsApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/GroupsApi.java
+END
+MediaApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/MediaApi.java
+END
+ReturnCode.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/ReturnCode.java
+END
+JsTicketApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/JsTicketApi.java
+END
+ShorturlApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/ShorturlApi.java
+END
+TemplateMsgApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/TemplateMsgApi.java
+END
+MessageApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/MessageApi.java
+END
+CallbackIpApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/CallbackIpApi.java
+END
+MediaFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/MediaFile.java
+END
+JsTicket.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/627/skywayct/src/com/jfinal/weixin/sdk/api/JsTicket.java
+END
+SnsAccessTokenApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/SnsAccessTokenApi.java
+END
+CustomServiceApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/CustomServiceApi.java
+END
+SnsAccessToken.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MyRepository/!svn/ver/109/skywayct/src/com/jfinal/weixin/sdk/api/SnsAccessToken.java
+END
+AutoReplyInfoApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/AutoReplyInfoApi.java
+END
+AccessTokenApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/MyRepository/!svn/ver/54/skywayct/src/com/jfinal/weixin/sdk/api/AccessTokenApi.java
+END
+SemanticApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/api/SemanticApi.java
+END
+SnsApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/SnsApi.java
+END
+MenuApi.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/1063/skywayct/src/com/jfinal/weixin/sdk/api/MenuApi.java
+END

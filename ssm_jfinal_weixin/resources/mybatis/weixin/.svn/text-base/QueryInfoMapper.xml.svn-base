@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QueryInfoMapper">
+
+<!-- *******************排行榜模块 START************************** -->	
+	<!-- 销售排行列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+SELECT
+	*
+FROM
+	(
+		SELECT
+			o.openid,
+			m.`name`,
+			SUM(o.amount) momey,
+			COUNT(o.openid) ordercount
+		FROM
+			weixin_order o
+		INNER JOIN weixin_member m ON o.openid = m.openid
+		AND o.paystatus = 1
+		AND o.`status` = 1 
+		<if test="(pd.lastStart ==null or pd.lastStart=='') and (pd.lastEnd==null or pd.lastEnd=='') "><!-- 开始时间检索 -->
+			AND  TO_DAYS(NOW()) - TO_DAYS(o.ts) = 0
+		</if>		
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.ts &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.ts &lt;= #{pd.lastEnd}
+		</if>	
+		GROUP BY
+			o.openid
+		LIMIT 100
+	) b 
+	WHERE 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			AND
+				(
+				b.name = #{pd.keywords}
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND b.momey &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND b.momey &lt;= #{pd.as_end} 
+		</if>			
+		<if test="pd.chooseType == 1 ">
+	      ORDER BY momey DESC	
+		</if>
+		<if test="pd.chooseType == 2 ">
+	      ORDER BY ordercount DESC
+		</if> 
+	
+	</select>
+	
+<!-- ******************排行榜模块 END**************************** -->	
+	
+	<!-- (skywayct) -->
+</mapper>

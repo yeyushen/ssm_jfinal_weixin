@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberQrcodeMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_menberqrcode
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+	    menberqrcode_id,
+		name,	
+		open_id,	
+		ticket,	
+		url,
+		path,	
+		create_time,
+		create_name,	
+		scene_id,	
+		bz,
+		status
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	    #{menberqrcode_id},
+		#{name},	
+		#{open_id},	
+		#{ticket},	
+		#{url},
+		#{path},	
+		#{create_time},	
+		#{create_name},
+		#{scene_id},	
+		#{bz},
+		#{status}
+	</sql>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		a.*
+		from 
+			<include refid="tableName"></include> a
+		where 1 = 1 
+		<if test="pd.keywords != null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				 a.name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and a.create_time &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and a.create_time &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.print_status!=null and pd.print_status!=''"><!-- 结束时间检索 -->
+			and a.isprint = #{pd.print_status}
+		</if>		
+		ORDER BY a.create_time DESC		
+	</select>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into <include refid="tableName"></include>(
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 若场景表没记录是则需新增 -->
+	<insert id="save_scene" parameterType="pd">
+	INSERT INTO weixin_scene(open_id,create_time) VALUES(#{open_id}, #{create_time});
+	<selectKey resultType="Integer" order="AFTER" keyProperty="scene_id">
+	SELECT LAST_INSERT_ID();
+	</selectKey>
+	</insert>
+	<!-- 查找刚插入的记录ID -->
+	<select id="findLastSceneId" resultType="Integer">
+	SELECT LAST_INSERT_ID();
+	</select>
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		DELETE FROM <include refid="tableName"></include>
+		WHERE
+			menberqrcode_id = #{menberqrcode_id}
+	</delete>
+	
+	<!-- 修改 -->
+<!-- 	<update id="edit" parameterType="pd">
+		update  <include refid="tableName"></include>
+			set 
+				TITLE = #{TITLE},
+				PATH = #{PATH},
+				<if test="NAME != null and NAME != ''">
+				NAME = #{NAME},
+				</if>
+				MASTER_ID = #{MASTER_ID},
+				BZ = #{BZ},
+			PICTURES_ID = PICTURES_ID
+			where 
+				menberqrcode_id = #{PICTURES_ID}
+	</update> -->
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="String" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			menberqrcode_id = #{menberqrcode_id}
+	</select>
+	
+	<!-- 根据open_id判断是否已存在 -->
+	<select id="findByOpenId" parameterType="String" resultType="pd">
+	SELECT * FROM weixin_menberqrcode WHERE open_id= #{opend_id} AND status = 0
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		DELETE FROM <include refid="tableName"></include>
+		WHERE 
+			menberqrcode_id IN
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- 批量打印二维码 -->	
+	<select id="findQrcode" parameterType="String" resultType="pd">
+SELECT
+	 CONCAT('https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=',ticket) wxpic
+FROM
+	weixin_menberqrcode
+WHERE
+	menberqrcode_id IN
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+ORDER BY create_time			
+	</select>
+	
+	<!-- 更新是否打印状态 -->
+	<update id="updateIsPrint" parameterType="String">
+UPDATE weixin_menberqrcode
+SET isprint = 1
+WHERE
+	menberqrcode_id IN
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</update>
+	
+	<!-- 批量获取 -->
+	<select id="getAllById" parameterType="String" resultType="pd">
+		select PATH from <include refid="tableName"></include>
+		where 
+			PICTURES_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</select>
+	
+	<!-- 获取所有用户名和openId -->
+	<select id="getAllMember" parameterType="pd" resultType="pd">
+	SELECT openid,name 
+	FROM weixin_member 
+	WHERE dr = 0
+	ORDER BY create_date DESC
+	</select>
+	
+	<!-- 通过OpenId查找SceneId -->
+	<select id="findSceneIdByOpenId" parameterType="String" resultType="pd">
+	SELECT * FROM weixin_scene WHERE open_id=#{open_id}  LIMIT 1
+	</select>
+	
+	<!-- Q(skywayct) -->
+</mapper>

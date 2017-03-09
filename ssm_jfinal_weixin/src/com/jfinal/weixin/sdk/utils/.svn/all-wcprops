@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MyRepository/!svn/ver/658/skywayct/src/com/jfinal/weixin/sdk/utils
+END
+Base64Utils.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/utils/Base64Utils.java
+END
+ClassUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/utils/ClassUtils.java
+END
+RetryUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/utils/RetryUtils.java
+END
+HttpKitExt.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/utils/HttpKitExt.java
+END
+IOUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/utils/IOUtils.java
+END
+Charsets.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/utils/Charsets.java
+END
+SHA1.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/658/skywayct/src/com/jfinal/weixin/sdk/utils/SHA1.java
+END

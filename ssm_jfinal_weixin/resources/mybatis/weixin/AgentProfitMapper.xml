@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AgentProfit">
+
+	<!-- 所有列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT
+		o.order_id,
+		o.order_no,
+		h.nick_name,
+		h.openid open_id,
+		h.parent_id,
+		o.phone,
+		o.recharge_dttm,
+		o.settlement_method,
+		o.product_price,
+		o.cost_price,
+		o.settlement_price,
+		o.profit_price,
+		o.profit_price1,
+		o.profit_price2,
+		o.profit_price3,
+		o.settlement_price-o.cost_price-IFNULL(o.profit_price, 0) commission,
+		m.product_name FROM weixin_order o
+		LEFT JOIN weixin_product m ON o.product_id = m.product_id
+		left join weixin_member h on h.openid = o.openid
+		WHERE 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+			(
+			m.product_name LIKE CONCAT(CONCAT('%',
+			#{pd.keywords}),'%')
+			or
+			o.phone LIKE CONCAT(CONCAT('%',
+			#{pd.keywords}), '%')
+			or
+			h.nick_name LIKE CONCAT(CONCAT('%',
+			#{pd.keywords}), '%')
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''">
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''">
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.settlement_method!=null and pd.settlement_method!=''">
+			and o.settlement_method = #{pd.settlement_method}
+		</if>
+		and o.paystatus = 1
+		and o.status = 1
+		AND	h.openid IN (${pd.childIds})
+		ORDER BY o.order_no DESC
+	</select>
+
+	<!-- 统计 -->
+	<select id="countProfit" parameterType="page" resultType="pd">
+		SELECT
+		count(o.product_id) total,
+		IFNULL(SUM(IFNULL(o.product_price,0)),0) totalProductPrice,
+		IFNULL(SUM(IFNULL(o.settlement_price,0)),0) totalSettlementPrice,
+		IFNULL(SUM(IFNULL(o.cost_price,0)),0) totalCostPrice,
+		IFNULL(SUM(IFNULL(o.settlement_price,0)-IFNULL(o.cost_price,0)-IFNULL(o.profit_price,
+		0)),0) totalcommission,
+		IFNULL(SUM(IFNULL(o.profit_price,0)),0)
+		totalProfitPrice,
+		IFNULL(SUM(IFNULL(o.profit_price1,0)),0)
+		totalProfitPrice1,
+		IFNULL(SUM(IFNULL(o.profit_price2,0)),0)
+		totalProfitPrice2,
+		IFNULL(SUM(IFNULL(o.profit_price3,0)),0)
+		totalProfitPrice3
+		FROM weixin_order o
+		LEFT JOIN weixin_product m ON o.product_id = m.product_id
+		left join weixin_member h on h.openid = o.openid
+		WHERE 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+			(
+			m.product_name LIKE CONCAT(CONCAT('%',
+			#{pd.keywords}),'%')
+			or
+			o.phone LIKE CONCAT(CONCAT('%',
+			#{pd.keywords}), '%')
+			or
+			h.nick_name LIKE CONCAT(CONCAT('%',
+			#{pd.keywords}), '%')
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''">
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''">
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.settlement_method!=null and pd.settlement_method!=''">
+			and o.settlement_method = #{pd.settlement_method}
+		</if>
+		and o.paystatus = 1
+		and o.status = 1
+		AND	h.openid IN (${pd.childIds})
+		ORDER BY o.order_no DESC
+	</select>
+
+</mapper>

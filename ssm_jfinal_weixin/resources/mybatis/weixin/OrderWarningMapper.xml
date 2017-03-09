@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderWarningMapper">
+
+	<resultMap type="OrderWarning" id="warningResultMap">
+		<id column="warning_id" property="warning_id" />
+		<result column="warning_tagid" property="warning_tagid" />
+		<result column="warning_tagname" property="warning_tagname" />
+<!-- 		<result column="order_hour" property="order_hour" />
+		<result column="max_order_num" property="max_order_num" />
+		<result column="max_unpay_num" property="max_unpay_num" />
+		<result column="money_hour" property="money_hour" />
+		<result column="max_consume_money" property="max_consume_money" />
+		<result column="tr" property="tr" />
+		<result column="dr" property="dr" /> -->
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_order_warning
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		warning_tagid,
+		warning_tagname,
+		order_hour,
+		max_order_num,
+		max_unpay_num,
+		money_hour,
+		max_consume_money,
+		tr,
+		dr,
+		is_order_continue
+	</sql>
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT
+		*
+		FROM
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			warning_tagname LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		and dr = 0
+		order by warning_tagname desc
+	</select>
+
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		)
+		values
+		(
+		#{warning_tagid},
+		#{warning_tagname},
+		#{order_hour},
+		#{max_order_num},
+		#{max_unpay_num},
+		#{money_hour},
+		#{max_consume_money},
+		#{tr},
+		0,
+		#{is_order_continue}
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		<if test="warning_tagname!= null and warning_tagname != ''"><!-- 编辑系统默认warning_tagname就为null,不给修改名字 -->
+		warning_tagname = #{warning_tagname},
+		</if>
+		order_hour = #{order_hour},
+		max_order_num = #{max_order_num},
+		max_unpay_num = #{max_unpay_num},
+		money_hour = #{money_hour},
+		max_consume_money = #{max_consume_money},
+		is_order_continue = #{is_order_continue}
+		where
+		warning_tagid = #{warning_tagid}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		*
+		from
+		<include refid="tableName"></include>
+		where
+		warning_tagid = #{warning_tagid}
+	</select>
+
+	<!-- 根据id删除(不是真正删除，修改dr由0变为1) -->
+	<update id="updateDrById" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		dr = 1
+		where
+		warning_tagid = #{warning_tagid}
+	</update>
+
+	<!-- 根据id批量删除(批量修改dr由0变为1) -->
+	<update id="updateAllDr" parameterType="String">
+		update
+		<include refid="tableName"></include>
+		set
+		dr = 1
+		where
+		warning_tagid in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		dr=0
+	</select>
+	
+	<!--消息权限 -->
+	<select id="listAllNewsQx" parameterType="String" resultMap="warningResultMap">
+		select
+		warning_id,
+		warning_tagid,
+		warning_tagname
+		from
+		weixin_order_warning
+		order by warning_tagname
+	</select>
+
+</mapper>

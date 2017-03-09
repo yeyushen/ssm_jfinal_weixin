@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyWalletMapper">
+
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		m.nick_name,
+		m.create_date,
+		w.amount
+		from
+		weixin_member m,
+		weixin_wallet w
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		and w.open_id = m.openid
+		and w.dr = 0
+		and m.dr = 0
+		order by m.create_date DESC
+	</select>
+	
+	<!-- 新增  -->
+	<insert id="save" parameterType="pd">
+    INSERT INTO weixin_wallet
+    (
+    open_id,
+    amount,
+    wallet_id,
+    dr
+    ) 
+    VALUES
+    (
+    #{open_id},
+    #{amount},
+    #{wallet_id},
+    #{dr}
+    )	
+	</insert>
+	
+	
+	<!-- 查询钱包 -->
+	<select id="findByOpenId" parameterType="pd" resultType="pd">
+	SELECT * FROM weixin_wallet WHERE open_id =#{pd.open_id}
+	</select>
+	
+	
+	<!-- 根据openId更新dr状态为0  -->
+	<update id="updateStatus" parameterType="String">
+	UPDATE weixin_wallet SET dr = 0 WHERE open_id = #{open_id}
+	</update>
+	
+	
+	<!-- 通过openId更新钱包     -->
+	<update id="updateByOpenId" parameterType="pd">
+	UPDATE weixin_wallet SET amount=amount+#{amount} WHERE open_id=#{open_id}
+	</update>
+	
+	
+	<!-- 通过openId是否存在记录 -->
+	<select id="isExistByOpenId" parameterType="String" resultType="Integer">
+	SELECT COUNT(open_id) FROM weixin_wallet WHERE open_id=#{open_id}
+	</select>
+
+</mapper>

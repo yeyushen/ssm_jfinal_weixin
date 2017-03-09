@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/MyRepository/!svn/ver/252/skywayct/src/com/jfinal/weixin/sdk/encrypt
+END
+ByteGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/encrypt/ByteGroup.java
+END
+AesException.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/encrypt/AesException.java
+END
+PKCS7Encoder.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/encrypt/PKCS7Encoder.java
+END
+必读.txt
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/252/skywayct/src/com/jfinal/weixin/sdk/encrypt/%E5%BF%85%E8%AF%BB.txt
+END
+XMLParse.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/encrypt/XMLParse.java
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/encrypt/readme.txt
+END
+SHA1.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/encrypt/SHA1.java
+END
+WXBizMsgCrypt.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/encrypt/WXBizMsgCrypt.java
+END

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductMapper">
+
+	<resultMap type="Operator" id="operatorResultMap">
+		<id column="id" property="id" />
+		<result column="type_name" property="type_name" />
+		<result column="parent_id" property="parent_id" />
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_product_type
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		id,
+		type_code,
+		type_name,
+		parent_id,
+		chnnl_type,
+		dr
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id},
+		#{type_code},
+		#{type_name},
+		#{parent_id},
+		#{chnnl_type},
+		#{dr}
+	</sql>
+
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into
+		weixin_product
+		(
+		product_id,
+		product_code,
+		product_name,
+		specify_name,
+		product_price,
+		settlement_price,
+		cost_price,
+		status,
+		profit,
+		profit_price,
+		modifier,
+		pid,
+		dr,
+		ispress,
+		is_recommend,
+		is_default,
+		style
+		)
+		values
+		(
+		#{product_id},
+		#{product_code},
+		#{product_name},
+		#{specify_name},
+		#{product_price},
+		#{settlement_price},
+		#{cost_price},
+		#{status},
+		#{profit},
+		#{profit_price},
+		#{modifier},
+		#{pid},
+		0,
+		#{ispress},
+		#{is_recommend},
+		#{is_default},
+		#{style}
+		)
+	</insert>
+	
+		<!-- 根据pid批量修改价格 -->
+	<update id="updateManyCostPrice" parameterType="pd">
+		update
+		weixin_product
+		set
+		<if test="chooseType != null and chooseType == 1 "> <!-- 修改结算价格 -->
+		settlement_price = #{doublePct}*product_price
+		</if>
+		<if test="chooseType != null and chooseType == 2 ">  <!-- 修改成本价格 -->
+		cost_price = #{doublePct}*product_price
+		</if>
+		<if test="chooseType != null and chooseType == 3 ">   <!-- 修改利润比例 -->
+		profit_price = #{doublePct}*settlement_price,profit=#{doublePct}
+		</if>
+		where
+		pid = #{pid}
+  	 </update>
+	
+		<!-- 修改全部价格 -->
+	<update id="updateAllCostPrice" parameterType="pd">
+		update
+		weixin_product
+		set
+		<if test="chooseType != null and chooseType == 1 "> <!-- 修改结算价格 -->
+		settlement_price = #{doublePct}*product_price
+		</if>
+		<if test="chooseType != null and chooseType == 2 ">  <!-- 修改成本价格 -->
+		cost_price = #{doublePct}*product_price
+		</if>
+		<if test="chooseType != null and chooseType == 3 ">   <!-- 修改利润比例 -->
+		profit_price = #{doublePct}*settlement_price,profit=#{doublePct}
+		</if>				
+		
+	</update>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		weixin_product
+		set
+		product_code = #{product_code},
+		product_code = #{product_code},
+		product_name = #{product_name},
+		specify_name = #{specify_name},
+		product_price = #{product_price},
+		settlement_price = #{settlement_price},
+		cost_price = #{cost_price},
+		status = #{status},
+		ispress = #{ispress},
+		is_recommend = #{is_recommend},
+		is_default = #{is_default},
+		style = #{style},
+		<if test="profit!= null and profit != ''"><!-- 检索 -->
+			profit = #{profit},
+		</if>
+		<if test="profit_price!= null and profit_price != ''"><!-- 检索 -->
+			profit_price = #{profit_price},
+		</if>
+		modifier = #{modifier}
+		<!-- pid = #{pid} -->
+		where
+		product_id = #{product_id}
+	</update>
+
+	<!-- 根据id删除(不是真正删除，修改dr由0变为1) -->
+	<update id="updateDrById" parameterType="pd">
+		update
+		weixin_product
+		set
+		dr = 1
+		where
+		product_id = #{product_id}
+	</update>
+	
+	<!-- 批量产品上架 -->
+	<update id="updateProductStatus1" parameterType="String">
+		update
+		weixin_product
+		set
+		status = 0
+		where
+		product_id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!-- 批量产品下架 -->
+	<update id="updateProductStatus2" parameterType="String">
+		update
+		weixin_product
+		set
+		status = 1
+		where
+		product_id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!-- 批量产品压单 -->
+	<update id="updateProductStatus3" parameterType="String">
+		update
+		weixin_product
+		set
+		ispress = 1
+		where
+		product_id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!-- 批量产品取消压单 -->
+	<update id="updateProductStatus4" parameterType="String">
+		update
+		weixin_product
+		set
+		ispress = 0
+		where
+		product_id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		p.*,
+		t.type_name
+		from
+		weixin_product p,
+		weixin_product_type t
+		where
+		p.pid = t.id
+		and
+		p.product_id = #{product_id}
+		and p.dr = 0
+		and t.dr = 0
+	</select>
+	
+		<!-- 通过ID获取数据 -->
+	<select id="findByPid" parameterType="pd" resultType="pd">
+		select
+		t.id,
+		t.type_name
+		from
+		weixin_product_type t
+		where
+		t.id = #{pid}
+		and
+		t.dr = 0
+	</select>
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		p.*,(CASE p.style WHEN 0 THEN '标准包' WHEN '1' THEN '红包' WHEN 2 THEN '转赠' ELSE '未知' END) style_name
+		<!-- p.product_id,
+		p.product_code,
+		p.product_name,
+		p.product_price,
+		p.settlement_price,
+		p.cost_price,
+		p.profit,
+		p.modifier,
+		p.status,
+		p.pid -->
+		from
+		weixin_product p,
+		weixin_product_type t
+		where
+		1=1
+		<if test="pd.pid!= null and pd.pid != ''"><!-- 检索 -->
+			and p.pid = #{pd.pid}
+		</if>
+		<if test="pd.is_recommend!= null and pd.is_recommend != ''"><!-- 检索 -->
+			and p.is_recommend = #{pd.is_recommend}
+		</if>
+		<if test="pd.is_default!= null and pd.is_default != ''"><!-- 检索 -->
+			and p.is_default = #{pd.is_default}
+		</if>
+		<if test="pd.keywords != null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			p.product_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			p.product_code LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			p.specify_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			)
+		</if>
+		and p.dr = 0
+		and t.dr = 0
+		and p.pid = t.id
+		order by p.product_price
+	</select>
+
+	<!-- 通过ID获取其子级列表 -->
+	<select id="listSubOperatorByParentId" parameterType="String"
+		resultMap="operatorResultMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		parent_id = #{parent_id}
+		and dr = 0
+		order by type_name
+	</select>
+
+	<!-- (skywayct) -->
+</mapper>

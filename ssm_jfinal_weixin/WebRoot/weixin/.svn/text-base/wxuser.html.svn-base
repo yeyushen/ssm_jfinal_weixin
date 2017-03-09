@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Expires" CONTENT="0">  
+		<meta http-equiv="Cache-Control" CONTENT="no-cache">  
+		<meta http-equiv="Pragma" CONTENT="no-cache"> 
+		<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1" >
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>个人中心</title>
+		<link href="css/main.css?v=71" type=text/css rel=stylesheet>
+		<link href="css/icon.css?v=71" type=text/css rel=stylesheet>	
+	
+	</head>
+	<body>
+		<div id="header" style="font-size:18px">
+			
+			<div id="back">
+				<span class=" f35"></span>
+			</div>
+			<tit>个人中心</tit>
+			<div id="hright">
+				<span></span>
+			</div>
+		</div>	
+			
+		<div id="content" class="mt50">
+			<div class="photobk">
+				<div class="wxhead trans5"></div>
+				<div class="wxheadFr"><i class=""></i></div>
+				<div class="hyinfo">
+					<div>
+						<span id="hyxm"></span><span id="wxkh" class="trans8"></span>
+					</div>
+					<div>
+						<span id="hyinfo" class="trans8" onclick="fnEditInfo()"><a href="javascript:void(0);" style="text-decoration: underline;">修改资料</a></span>
+					</div>					
+				</div>
+			</div>
+			<div class="yejf">
+				<span id="skyye"></span><span id="wxkjf"></span><span id="byspan1" style="cursor:pointer;"></span><span id="byspan2"></span>
+			</div>
+			<div class="myBill" >
+
+				<div id="skyicon" style="min-height:400px;overflow:auto;">
+				    <div class="clr"><a href="javascript:void(0);" onclick="fnRecharge()"><circles class="wrad52"><span class="icon-czkcz"></span></circles>流量充值</a></div>
+				    <div class="clr"><a href="javascript:void(0);" onclick="fnLlczMx()"><circles class="wrad52"><span class="icon-czkcz"></span></circles>充值记录</a></div>
+				    <div class="clr"><a href="javascript:void(0);" onclick="fnMyQrcode()"><circles class="wrad52"><span class="icon-qrcode2"></span></circles>我的推荐码</a></div>
+				    <div class="clr"><a href="javascript:void(0);" onclick="fnMyTeam()"><circles class="wrad52"><span class="icon-fenxiao"></span></circles>我的会员圈</a></div>
+				    <div class="clr"><a href="javascript:void(0);" onclick="fnMycommission()"><circles class="wrad52"><span class="icon-yongjin"></span></circles>我的佣金</a></div>
+                    <div class="clr"><a href="javascript:void(0);" onclick="fnCreateTxsq()"><circles class="wrad52"><span class="icon-lqbtx"></span></circles>提现申请</a></div>
+                    <div class="clr"><a href="javascript:void(0);" onclick="fnTxsqRecords()"><circles class="wrad52"><span class="icon-lqbtx"></span></circles>提现记录</a></div>
+                    <div class="clr"><a id="skytel"><circles class="wrad52"><span class="icon-phone"></span></circles>客服电话</a></div>
+                    <div class="clr"><a href="javascript:void(0);" onclick="fnJfstore()"><circles class="wrad52"><span class="icon-myjf"></span></circles>积分商城</a></div>                    
+           
+                    
+                    
+                    <!-- <div class="clr"><a href="javascript:void(0);"><circles class="wrad52"><span class="icon-fenxiao"></span></circles>我的团队</a></div>
+                    <div class="clr"><a href="javascript:void(0);"><circles class="wrad52"><span class="icon-qrcode2"></span></circles>我的推荐码</a></div> -->
+				</div>
+			</div>
+			
+			<div class="footerWrapper" style="background-color:#43ACF9;position: fixed;bottom: 0;width: 100%;">
+		   	 	<div class="copyrightWrapper" style="text-align:center;color:#fff;line-height:20px;padding-top:10px;">
+					<span>技术支持：迪士恩信息科技  <br></span> 
+					<span>商务合作：<a href="tel:02029016991" style="font-weight:bold;text-decoration: underline">020-29016991</a> &nbsp;&nbsp;</span>
+		        </div>
+		    
+		    	<div style="margin:10px;">
+		    		<span style="float:left;width:40%;"><a href="tel:02029016991" style="font-weight:bold;text-decoration: underline">客服电话</a></span>
+		    		<span style="float:center;"><a href="http://mp.weixin.qq.com/s?__biz=MzIwMDgxOTQyMA==&mid=100000016&idx=1&sn=5b5500fa8e4c256d1b4baae5c5357319&scene=0&previewkey=gaY9ATJJfOApQ26mf6BuDMwqSljwj2bfCUaCyDofEow%3D#wechat_redirect" style="font-weight:bold;text-decoration: underline">免费流量</a></span>
+		    		<span style="float:right;width:32%;text-align:right;"><a href="http://mp.weixin.qq.com/s?__biz=MzI0MTI2ODU4OA==&mid=100000026&idx=1&sn=683694ae849d9f4d2663425efd983dba#rd" style="font-weight:bold;text-decoration: underline">常见问题?</a></span>
+		    	</div>
+	    	</div>
+
+		</div>
+		<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=G5IducoC64P4FkSIEs0UAca0zNGstyNg"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript" src="http://www.veryhuo.com/uploads/Common/js/jQuery.md5.js"></script>
+		<script type="text/javascript" src="js/skywayct.js?v=71"></script>
+		<script type="text/javascript" src="js/user.js?v=77"></script>
+		<script src="js/liga.js"></script>
+	</body>
+</html>

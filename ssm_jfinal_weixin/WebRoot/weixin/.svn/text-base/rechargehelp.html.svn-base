@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta content="yes" name="apple-mobile-web-app-capable">
+<title>充值帮助</title>
+<link href="css/help.css?t=20130423174101" type=text/css rel=stylesheet>
+<!-- <link rel="stylesheet" href="http://static.paipaiimg.com/chong/pbcss/h5_reset.20130410.css?t=20130423174101" />
+<link rel="stylesheet" href="http://static.paipaiimg.com/chong/pbcss/h5_chong_suc.20140305.css?t=20140305112713" /> -->
+</head>
+<body>
+	<ol class="help-list">
+		<!--LFWEBPAGEBEGIN@2770-->
+		<li>
+			<div class="title">
+				<span class="num">1</span>哪些号码可以充值流量？<i class="arrow"></i>
+			</div>
+			<div class="ctn">正常使用的全国号码都可以充值，停机、黑名单、转品牌未生效的不能充值。</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">2</span>省内流量和全国流量有什么区别？<i class="arrow"></i>
+			</div>
+			<div class="ctn">省内流量只能是本省号码可以充值，流量不能漫游。全国流量无限制。</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">3</span>为什么我充值后，使用流量还被运营商扣了额外的费用？<i class="arrow"></i>
+			</div>
+			<div class="ctn">充值完成后，请确保您在收到到账短信后再使用流量，以防出现流量包之外的费用。出现流量不到账的时候，建议您先参考信息5，确认您的订单情况。</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">4</span>充值的流量有效期是多长？<i class="arrow"></i>
+			</div>
+			<div class="ctn">正常都是充值成功后立即生效，一般都是月底清零。某些地区电信用户存在月结清零或者月底清零。请以短信通知及在运营商处查询的信息为准。</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">5</span>我充值后怎么查看是否到账？<i class="arrow"></i>
+			</div>
+			<div class="ctn">充值完成后，请查看菜单或个人中心的充值记录，成功后一般都有运营商的短信通知。更保险的方法可以自行登录网厅查询流量叠加包是否生效</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">6</span>流量充错号码怎么办？<i class="arrow"></i>
+			</div>
+			<div class="ctn">非常抱歉，充错号码后运营商（移动、联通、电信）是不会办理退款的。 由于充值成功后，交易就已经完成，运营商不会将已经充上的流量退还给供货商，所以我们也无法给您办理退款。并希望您在下次操作的时候注意核对号码是否正确，谢谢您的支持！</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">7</span>充值失败后，为什么我没有收到退款？<i class="arrow"></i>
+			</div>
+			<div class="ctn">通常情况下，充值失败时我们会立即为您办理退款，如果您使用银行卡或者零钱支付，退款会立即退回微信钱包。信用卡退款时间可能会较长，您可以直接致电银行或登录网银查看退款情况。</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">8</span>为什么我的号码一直充值失败？<i class="arrow"></i>
+			</div>
+			<div class="ctn">由于联通存在每个面额每个月充值5次的限制，充值超过5次将会出现失败退款。建议您充值其他面额的流量。另外，号码欠费、套餐互斥、非实名认证、运营商黑名单等原因也会导致充值失败退款。联通4G用户只能充值全国套餐</div>
+		</li>
+
+		<li>
+			<div class="title">
+				<span class="num">9</span>充值流量后能取消吗？<i class="arrow"></i>
+			</div>
+			<div class="ctn">不可以。流量充值接近实时交易，支付完成后，交易系统会在数秒中向运营商发起充值请求并且充值到账。充值中的订单也会锁定，无法进行资金回退交易。您需要在充值前确定需要充值流量。</div>
+		</li>
+		<!-- <li>
+			<div class="title">
+				<span class="num">10</span>充值流量后能取消吗？<i class="arrow"></i>
+			</div>
+			<div class="ctn">不可以。流量充值接近实时交易，支付完成后，交易系统会在数秒中向运营商发起充值请求并且充值到账。充值中的订单也会锁定，无法进行资金回退交易。您需要在充值前确定需要充值流量。</div>
+		</li> -->
+	</ol>
+</body>
+<script>
+	var x=0,y=0,dx=0,dy=0;
+	document.body.addEventListener('touchstart',function(e){
+		e=e.touches&&e.touches[0]||e;
+		x=e.pageX,y=e.pageY;
+		// log('start '+[x,y]);
+		dx=dy=0;
+	},false);
+	document.body.addEventListener('touchmove',function(e){
+		e=e.touches&&e.touches[0]||e;
+		dx+=Math.abs(e.pageX-x);
+		dy+=Math.abs(e.pageY-y);
+	},false);
+	document.body.addEventListener('touchend',function(e){
+		e=e.touches&&e.touches[0]||e;
+		if(dx>30||dy>30)return ;
+		if(e.target.className==='title'){
+			var p=e.target.parentElement;
+			p.className=p.className==='cur'?'':'cur';
+		}
+	},false);
+</script>
+</html>

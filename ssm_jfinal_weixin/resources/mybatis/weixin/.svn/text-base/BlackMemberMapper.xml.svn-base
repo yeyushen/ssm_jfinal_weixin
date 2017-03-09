@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BlackMemberMapper">
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT
+		a.amount,
+		w.id,
+        w.ordinarymember_id,
+        w.openid,
+        w.nick_name,
+        w.name,
+        w.phone,
+        w.photo,
+        w.create_date,
+        w.dr
+		FROM 
+		weixin_member w
+		INNER JOIN
+		weixin_wallet a
+		ON
+		w.openid = a.open_id
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					 w.openid LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					or 
+					 w.name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					or  
+					 w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and w.create_date &gt;= #{pd.lastStart} 
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and w.create_date &lt;= #{pd.lastEnd} 
+		</if>
+		AND w.dr = 0 
+		AND w.is_black = 0
+		order by w.create_date desc
+	</select>
+	
+	<!-- 根据id批量删除(批量修改dr由0变为1) -->
+	<update id="updateMemberToBlack" parameterType="String">
+		update 
+		weixin_member
+		set 
+			is_black = 0
+		where 
+			openid in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</update>
+	
+	<!-- 根据id批量删除(批量修改dr由0变为1) -->
+	<update id="updateRemoveMemberBlack" parameterType="String">
+		update 
+		weixin_member
+		set 
+			is_black = null
+		where 
+			openid not in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+		and is_black = 0
+	</update>
+	
+
+</mapper>

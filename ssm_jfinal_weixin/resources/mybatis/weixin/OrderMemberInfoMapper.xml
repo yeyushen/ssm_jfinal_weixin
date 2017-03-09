@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderMemberInfoMapper">
+
+<!-- ***************代理会员与二维码推广信息统计模块 START********************** -->	
+    <!-- 查询所有代理会员openId -->
+<!--     <select id="listAgentOpenId" resultType="pd" parameterType="pd">
+SELECT DISTINCT
+	u.openid,m.`name`
+FROM
+	sys_user u
+INNER JOIN weixin_member m ON u.openid = m.openid
+		<if test="pd.keywords != null and pd.keywords !='' ">
+		    AND m.`name` LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+		</if>
+AND u.OPENID IS NOT NULL 
+    </select>
+    代理会员下级所有会员统计    
+    <select id="childListInfo" resultType="pd" parameterType="pd"> 
+SELECT DISTINCT
+	u.openid,
+	m.`name` ,@childStr := member_getById (u.openid) childStr ,@childCount := split_count (@childStr, ',') childCount
+FROM
+	sys_user u
+INNER JOIN weixin_member m ON u.openid = m.openid
+AND u.OPENID IS NOT NULL      
+    </select> -->
+
+	<!-- 下级所有订单信息总统计列表 -->
+	<!-- 利用存储过程创建临时统计表 -->
+	<select id="createTempTb" parameterType="pd">
+	CALL ${pro_name}(#{strWhere})
+	</select>
+	<!-- 列表 -->
+	<!-- 代理会员信息统计列表 -->
+	<select id="agentInfolistPage" parameterType="page" resultType="pd">
+	SELECT * FROM tmpAgentOrderInfo WHERE 1=1
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND  child_ordermoney &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND child_ordermoney &lt;= #{pd.as_end} 
+		</if>
+		ORDER BY child_ordermoney DESC,child_count DESC,child_ordercount DESC	
+	</select>
+	<!-- 二维码推广信息统计列表 -->	
+	<select id="qrcodeInfolistPage" parameterType="page" resultType="pd">
+	SELECT * FROM tmpQrcodeOrderInfo WHERE 1=1
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND  child_ordermoney &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND child_ordermoney &lt;= #{pd.as_end} 
+		</if>
+		ORDER BY child_ordermoney DESC,child_count DESC,child_ordercount DESC
+	</select>
+ 	<!-- 统计总的代理会员信息 -->	
+	<select id="countAgentInfo" parameterType="pd" resultType="pd">
+	SELECT 
+	COUNT(agent_openid) totalCount,
+	SUM(child_ordercount) totalOrderCount,
+	SUM(child_ordermoney) totalOrderMoney,
+	SUM(child_count) totalChildCount
+	FROM tmpAgentOrderInfo WHERE 1=1
+		<if test="as_head != null and as_head != '' ">
+		    AND  child_ordermoney &gt;= #{as_head}
+		</if>
+		<if test="as_end != null and as_end != '' ">
+		    AND child_ordermoney &lt;= #{as_end} 
+		</if>
+		ORDER BY child_ordermoney DESC,child_count DESC,child_ordercount DESC
+	</select>   	
+ 	<!-- 统计总的二维码推广信息 -->	
+	<select id="countQrcodeInfo" parameterType="pd" resultType="pd">
+	SELECT 
+	COUNT(agent_openid) totalCount,
+	SUM(child_ordercount) totalOrderCount,
+	SUM(child_ordermoney) totalOrderMoney,
+	SUM(child_count) totalChildCount
+	FROM tmpQrcodeOrderInfo WHERE 1=1
+		<if test="as_head != null and as_head !='' ">
+		    AND  child_ordermoney &gt;= #{as_head}
+		</if>
+		<if test="as_end != null and as_end != '' ">
+		    AND child_ordermoney &lt;= #{as_end} 
+		</if>
+		ORDER BY child_ordermoney DESC,child_count DESC,child_ordercount DESC
+	</select>   
+	
+	
+    <!-- 查询所有父openId下所有子openId -->
+    <select id="getAllChildId" parameterType="pd" resultType="String">
+    SELECT member_getById(#{openid}) childIds;
+    </select>
+
+
+	<!-- 下级所有会员订单列表 -->
+	<select id="childlistPage" parameterType="page" resultType="pd">
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid 
+AND o.`status` = 1
+AND o.paystatus = 1
+AND o.dr = 0
+WHERE
+m.dr = 0 
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.keywords!=null and pd.keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+		</if>		
+AND	m.openid IN (${pd.childIds})
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{pd.as_end} 
+		</if>
+ORDER BY money DESC
+	</select>
+	
+	<!-- 下级所有会员订单列表 1级会员 -->
+	<select id="ChildLv1listPage" parameterType="page" resultType="pd">
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid
+AND o.dr = 0
+AND o.`status` = 1
+AND o.paystatus = 1
+WHERE
+m.dr = 0
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.keywords!=null and pd.keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+		</if>	
+AND	m.parent_id =  #{pd.openid}
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{pd.as_end} 
+		</if>
+ORDER BY money DESC
+	</select>
+	
+	<!-- 下级所有会员订单列表 2级会员 -->
+	<select id="ChildLv2listPage" parameterType="page" resultType="pd">
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid
+AND o.dr = 0
+AND o.`status` = 1
+AND o.paystatus = 1
+WHERE
+m.dr = 0
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.keywords!=null and pd.keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+		</if>			
+AND	m.openid IN
+(
+SELECT
+	openid
+FROM
+	weixin_member a
+WHERE
+	a.parent_id IN (
+		SELECT
+			openid
+		FROM
+			weixin_member
+		WHERE
+			parent_id = #{pd.openid}
+	)
+)
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{pd.as_end} 
+		</if>
+		<if test="pd.keywords!=null and pd.keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+		</if>			
+ORDER BY money DESC
+	</select>
+	
+	<!-- 下级所有会员订单列表 3级会员 -->
+	<select id="ChildLv3listPage" parameterType="page" resultType="pd">
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid
+AND o.dr = 0
+AND o.`status` = 1
+AND o.paystatus = 1
+WHERE
+m.dr = 0
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.keywords!=null and pd.keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+		</if>			
+AND	m.openid IN
+(
+SELECT
+	openid
+FROM
+	weixin_member a
+WHERE
+	a.parent_id IN (
+		SELECT
+			openid
+		FROM
+			weixin_member
+		WHERE
+			parent_id IN (	
+		SELECT
+			openid
+		FROM
+			weixin_member
+		WHERE
+			parent_id = #{pd.openid}
+			)
+	)
+)
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{pd.as_end} 
+		</if>
+ORDER BY money DESC
+	</select>	
+<!-- 子会员统计  -->		
+	<!-- 下级所有会员订单列表 -->
+	<select id="countChildInfo" parameterType="pd" resultType="pd">
+SELECT COUNT(openid) totalCount,
+SUM(CASE WHEN money > 0 THEN 1 ELSE 0 END) saleCount,
+SUM(CASE WHEN money = 0 THEN 1 ELSE 0 END) freeCount,
+SUM(orderCount) totalOrder,
+SUM(money) totalMoney
+FROM (	
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid 
+AND o.`status` = 1
+AND o.paystatus = 1
+AND o.dr = 0
+WHERE
+m.dr = 0 
+		<if test="lastStart!=null and lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{lastStart}
+		</if>
+		<if test="lastEnd!=null and lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{lastEnd}
+		</if>
+		<if test="keywords!=null and keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+		</if>		
+AND	m.openid IN (${childIds})
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="as_head != null and as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{as_head}
+		</if>
+		<if test="as_end != null and as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{as_end} 
+		</if>
+) NN
+	</select>
+	
+	<!-- 代理会员下级所有会员订单列表 1级会员 -->
+	<select id="countChildLv1Info" parameterType="pd" resultType="pd">
+SELECT COUNT(openid) totalCount,
+SUM(CASE WHEN money > 0 THEN 1 ELSE 0 END) saleCount,
+SUM(CASE WHEN money = 0 THEN 1 ELSE 0 END) freeCount,
+SUM(orderCount) totalOrder,
+SUM(money) totalMoney
+FROM (	
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid
+AND o.dr = 0
+AND o.`status` = 1
+AND o.paystatus = 1
+WHERE
+m.dr = 0
+		<if test="lastStart!=null and lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{lastStart}
+		</if>
+		<if test="lastEnd!=null and lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{lastEnd}
+		</if>
+		<if test="keywords!=null and keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+		</if>	
+AND	m.parent_id =  #{openid}
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="as_head != null and as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{as_head}
+		</if>
+		<if test="as_end != null and as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{as_end} 
+		</if>
+) NN
+	</select>
+	
+	<!-- 代理会员下级所有会员订单列表 2级会员 -->
+	<select id="countChildLv2Info" parameterType="pd" resultType="pd">
+SELECT COUNT(openid) totalCount,
+SUM(CASE WHEN money > 0 THEN 1 ELSE 0 END) saleCount,
+SUM(CASE WHEN money = 0 THEN 1 ELSE 0 END) freeCount,
+SUM(orderCount) totalOrder,
+SUM(money) totalMoney
+FROM (	
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid
+AND o.dr = 0
+AND o.`status` = 1
+AND o.paystatus = 1
+WHERE
+m.dr = 0
+		<if test="lastStart!=null and lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{lastStart}
+		</if>
+		<if test="lastEnd!=null and lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{lastEnd}
+		</if>
+		<if test="keywords!=null and keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+		</if>			
+AND	m.openid IN
+(
+SELECT
+	openid
+FROM
+	weixin_member a
+WHERE
+	a.parent_id IN (
+		SELECT
+			openid
+		FROM
+			weixin_member
+		WHERE
+			parent_id = #{openid}
+	)
+)
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="as_head != null and as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{as_head}
+		</if>
+		<if test="as_end != null and as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{as_end} 
+		</if>
+		<if test="keywords!=null and keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+		</if>			
+) NN
+	</select>
+	
+	<!-- 下级所有会员订单列表 3级会员 -->
+	<select id="countChildLv3Info" parameterType="pd" resultType="pd">
+SELECT COUNT(openid) totalCount,
+SUM(CASE WHEN money > 0 THEN 1 ELSE 0 END) saleCount,
+SUM(CASE WHEN money = 0 THEN 1 ELSE 0 END) freeCount,
+SUM(orderCount) totalOrder,
+SUM(money) totalMoney
+FROM (	
+SELECT * FROM (	
+SELECT
+	m.openid,
+	m.`name`,
+	IFNULL(SUM(o.amount), 0) money,
+	COUNT(o.order_id) orderCount
+FROM
+	weixin_member m
+LEFT JOIN weixin_order o ON o.openid = m.openid
+AND o.dr = 0
+AND o.`status` = 1
+AND o.paystatus = 1
+WHERE
+m.dr = 0
+		<if test="lastStart!=null and lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{lastStart}
+		</if>
+		<if test="lastEnd!=null and lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{lastEnd}
+		</if>
+		<if test="keywords!=null and keywords!=''"><!-- 关键词检索 -->
+			AND m.`name` LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+		</if>			
+AND	m.openid IN
+(
+SELECT
+	openid
+FROM
+	weixin_member a
+WHERE
+	a.parent_id IN (
+		SELECT
+			openid
+		FROM
+			weixin_member
+		WHERE
+			parent_id IN (	
+		SELECT
+			openid
+		FROM
+			weixin_member
+		WHERE
+			parent_id = #{openid}
+			)
+	)
+)
+GROUP BY
+	m.openid
+) MM WHERE 1=1
+		<if test="as_head != null and as_head !='' ">  <!-- 提现金额范围头 -->
+		    AND money &gt;= #{as_head}
+		</if>
+		<if test="as_end != null and as_end != '' ">   <!-- 提现金额范围尾 -->
+		    AND money &lt;= #{as_end} 
+		</if>
+) NN
+	</select>	
+<!-- 子统计结束 -->		
+		
+	
+	<!-- 下级某会员订单详细 -->
+	<select id="childDetaillistPage" parameterType="page" resultType="pd">
+SELECT
+	m.`name`,
+	o.phone,
+	p.product_name,
+	o.product_price,
+	o.settlement_price,
+	o.settlement_method,
+	o.attribution,
+	o.recharge_dttm
+FROM
+	weixin_order o
+INNER JOIN weixin_product p ON o.product_id = p.product_id
+INNER JOIN weixin_member m ON o.openid = m.openid
+AND o.dr = 0
+AND o.`status` = 1
+AND o.paystatus = 1
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+AND o.openid = #{pd.open_id}
+ORDER BY o.recharge_dttm DESC	
+	</select>
+	
+	<!-- 会员个人信息 -->
+	<select id="childDetailInfo" parameterType="pd" resultType="pd">
+SELECT
+	*
+FROM
+	v_member_info
+WHERE
+	openid = #{open_id}		
+	</select>
+	
+	
+    <select id="findNameByOpenId" parameterType="String" resultType="String">
+SELECT
+	`name`
+FROM
+	weixin_member
+WHERE
+	openid = #{openid}    
+    </select>
+
+
+
+
+<!-- **********************END  ************************ -->
+	
+	<!-- (skywayct) -->
+</mapper>

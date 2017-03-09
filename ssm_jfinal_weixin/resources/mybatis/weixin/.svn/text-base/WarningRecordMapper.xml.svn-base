@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WarningRecordMapper">
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT
+		w.warnrec_id,
+		w.warning_tagid,
+		w.openid,
+		w.content,
+		CAST(w.ts AS char) as ts,
+		w.dr,
+		a.warning_tagname
+		FROM
+		weixin_warning_record w
+		left join
+		weixin_order_warning a
+		on w.warning_tagid = a.warning_tagid
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			w.openid LIKE CONCAT('%', #{pd.keywords},'%')
+			or
+			w.content LIKE CONCAT('%', #{pd.keywords},'%')
+			or
+			a.warning_tagname LIKE CONCAT('%', #{pd.keywords},'%')
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and w.ts &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and w.ts &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.warning_tagid!=null or pd.warning_tagid!=''">
+			and find_in_set(w.warning_tagid,#{pd.warning_tagid})
+		</if>
+		<if test="pd.showuser!=null or pd.showuser!=''">
+			and !find_in_set(#{pd.showuser},w.showuser)
+		</if>
+	</select>
+	
+	<update id="update" parameterType="pd">
+		update
+		weixin_warning_record
+		set showuser = CONCAT(showuser,',',#{showuser})
+		where warnrec_id = #{warid}
+	</update>
+	
+
+</mapper>

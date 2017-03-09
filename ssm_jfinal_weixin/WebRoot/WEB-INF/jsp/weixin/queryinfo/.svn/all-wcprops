@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/MyRepository/!svn/ver/1793/skywayct/WebRoot/WEB-INF/jsp/weixin/queryinfo
+END
+rank_queryinfo_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/MyRepository/!svn/ver/1219/skywayct/WebRoot/WEB-INF/jsp/weixin/queryinfo/rank_queryinfo_list.jsp
+END
+order_member_info_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MyRepository/!svn/ver/1579/skywayct/WebRoot/WEB-INF/jsp/weixin/queryinfo/order_member_info_list.jsp
+END
+ordermember_childinfo_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/MyRepository/!svn/ver/1580/skywayct/WebRoot/WEB-INF/jsp/weixin/queryinfo/ordermember_childinfo_list.jsp
+END
+member_info_show.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/MyRepository/!svn/ver/1272/skywayct/WebRoot/WEB-INF/jsp/weixin/queryinfo/member_info_show.jsp
+END
+member_order_show.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/MyRepository/!svn/ver/1793/skywayct/WebRoot/WEB-INF/jsp/weixin/queryinfo/member_order_show.jsp
+END

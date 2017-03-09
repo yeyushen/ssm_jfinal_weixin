@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CashMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_cash
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+
+	</sql>
+	
+		<!-- 根据id批量删除(批量修改dr由0变为1) -->
+	<update id="updateAllDr" parameterType="String">
+		update 
+		weixin_cash
+		set 
+			dr = 1
+		where 
+			cash_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</update>
+	
+	
+		<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd"> 
+		select
+		c.*,(SELECT `name` FROM weixin_member WHERE openid=c.open_id) nick_name
+		from 
+		weixin_cash c
+		where 
+			c.cash_id = #{cash_id}
+	</select>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			status = #{status},
+			note = #{note},
+			approve = #{approve},
+			approve_time = #{approve_time}
+		where 
+		cash_id = #{cash_id}
+	</update>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		c.*, 
+		m.nick_name
+		from 
+		weixin_cash c
+		LEFT JOIN
+		weixin_member m
+		ON c.open_id = m.openid
+		where 1=1 
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					 c.open_id LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					or 
+					 c.name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					<!-- or  
+					 w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and c.cash_time &gt;= #{pd.lastStart} 
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and c.cash_time &lt;= #{pd.lastEnd} 
+		</if>
+		<if test="pd.cash_method!=null and pd.cash_method!=''">
+			and c.cash_method = #{pd.cash_method} 
+		</if>
+		<if test="pd.status!=null and pd.status!=''">
+			and c.status = #{pd.status} 
+		</if>
+		<if test="pd.as_head != null and pd.as_head !='' ">  <!-- 提现金额范围头 -->
+		    and c.amount &gt;= #{pd.as_head}
+		</if>
+		<if test="pd.as_end != null and pd.as_end != '' ">   <!-- 提现金额范围尾 -->
+		    and c.amount &lt;= #{pd.as_end} 
+		</if>
+		
+		and c.dr = 0
+		order by c.cash_time desc,c.amount desc
+	</select>
+	
+</mapper>

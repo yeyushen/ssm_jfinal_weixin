@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberGeographic">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_position
+	</sql>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+SELECT
+	p.*
+FROM
+	(
+		SELECT
+			g.openid,
+			g.bdlng,
+			g.bdlat,
+			(
+				SELECT
+					REPLACE(m.nick_name,'\''," ")
+				FROM
+					weixin_member m
+				WHERE
+					m.openid = g.openid
+			) membername
+		FROM
+			weixin_position g
+			WHERE 1 = 1 
+		<if test="lastStart!=null and lastStart!=''"><!-- 开始时间检索 -->
+			AND g.ts &gt;= #{lastStart} 
+		</if>
+		<if test="lastEnd!=null and lastEnd!=''"><!-- 结束时间检索 -->
+			AND g.ts &lt;= #{lastEnd} 
+		</if>
+		ORDER BY
+			g.ts DESC
+	) p 
+	WHERE 1 = 1
+<if test="keywords!=null and keywords!=''"><!-- 有搜索特定人显示该人位置信息 -->
+AND p.membername = #{keywords}
+</if>	
+<if test="keywords==null or keywords==''"><!-- 无则显示全部人 -->		
+GROUP BY
+	p.openid
+</if>	
+	</select>
+	
+	<!-- 根据会员名称查找位置信息 -->
+	<select id="findByName" parameterType="String" resultType="pd">
+SELECT
+	bdlng,
+	bdlat
+FROM
+	weixin_position g
+INNER JOIN weixin_member m ON g.openid = m.openid
+AND m.`name` = #{nick_name} ORDER BY g.ts DESC
+LIMIT 1	
+	</select>
+
+	
+	
+	<!-- () -->
+</mapper>

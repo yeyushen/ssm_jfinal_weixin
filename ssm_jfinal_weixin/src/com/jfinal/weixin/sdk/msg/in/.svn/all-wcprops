@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in
+END
+InImageMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InImageMsg.java
+END
+InTextMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InTextMsg.java
+END
+InVoiceMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InVoiceMsg.java
+END
+InShortVideoMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InShortVideoMsg.java
+END
+InVideoMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InVideoMsg.java
+END
+InLocationMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InLocationMsg.java
+END
+InLinkMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InLinkMsg.java
+END
+InMsg.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/msg/in/InMsg.java
+END

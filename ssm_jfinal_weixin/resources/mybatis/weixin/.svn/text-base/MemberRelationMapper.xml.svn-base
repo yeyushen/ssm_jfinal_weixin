@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberRelationMapper">
+	<resultMap type="Member" id="memberResultMap">
+		<id column="openid" property="openid" />
+		<result column="nick_name" property="nick_name" />
+		<result column="parent_id" property="parent_id" />
+	</resultMap>
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_member
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		openid,
+		nick_name,
+		name,
+		photo,
+		sex,
+		phone,
+		mobile,
+		email,
+		create_date,
+		canceled,
+		level_id,
+		parent_id,
+		ordinarymember_id,
+		dr
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{openid},
+		#{nick_name},
+		#{name},
+		#{photo},
+		#{sex},
+		#{phone},
+		#{mobile},
+		#{email},
+		#{create_date},
+		#{canceled},
+		#{level_id},
+		#{parent_id},
+		#{ordinarymember_id},
+		#{dr}
+	</sql>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		openid = #{openid}
+	</select>
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+SELECT
+	n.*, s.lv1,
+	s.lv2,
+	s.lv3
+FROM
+	(
+		SELECT
+      w.*,
+			c.amount
+		FROM
+			(
+		SELECT
+        e.nick_name,
+        e.name,
+        e.province,
+        e.country,
+        e.city,        
+        e.create_date,
+        e.parent_id,
+        e.openid,
+        e.level_id,
+        e.dr,
+        b.nick_name parent_name
+				FROM
+					weixin_member e
+				LEFT JOIN weixin_member b ON e.parent_id = b.openid
+				WHERE
+					e.dr = 0
+			) w
+		INNER JOIN weixin_wallet c ON w.openid = c.open_id AND w.dr = 0
+	) n
+INNER JOIN weixin_member_statistics s ON s.openid = n.openid 
+		<if test="pd.openid!= null and pd.openid != ''"><!-- 检索 -->
+			and n.parent_id = #{pd.openid}
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and create_date &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and create_date &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.sort==1 or pd.sort==null or pd.sort==''">
+			order by lv1 desc,lv2 desc, lv3 desc, create_date asc
+		</if>
+		<if test="pd.sort==2">
+			order by lv2 desc,lv1 desc, lv3 desc, create_date asc
+		</if>
+		<if test="pd.sort==3">
+			order by lv3 desc,lv1 desc, lv2 desc, create_date asc
+		</if>
+	</select>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- 通过ID获取其子级列表 -->
+	<!-- <select id="listSubMemberByParentId" parameterType="String"
+		resultMap="memberResultMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		parent_id = #{parentId} order by nick_name
+	</select> -->
+
+
+</mapper>

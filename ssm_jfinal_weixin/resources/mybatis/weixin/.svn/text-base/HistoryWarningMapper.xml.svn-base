@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HistoryWarningMapper">
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT
+		w.*,
+		m.nick_name,
+		m.name
+		FROM 
+		weixin_warning_record w
+		LEFT JOIN
+		weixin_member m
+		ON
+		w.openid = m.openid
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					 m.openid LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					or 
+					 m.name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					or  
+					 m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and w.ts &gt;= #{pd.lastStart} 
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and w.ts &lt;= #{pd.lastEnd} 
+		</if>
+		AND w.dr = 0 
+		order by w.ts desc
+	</select>
+	
+		<!-- 根据id删除(不是真正删除，修改dr由0变为1) -->
+	<update id="updateDrById" parameterType="pd">
+		update
+		weixin_warning_record
+		set
+		dr = 1
+		where
+		warnrec_id = #{warnrec_id}
+	</update>
+
+	<!-- 根据id批量删除(批量修改dr由0变为1) -->
+	<update id="updateAllDr" parameterType="String">
+		update
+		weixin_warning_record
+		set
+		dr = 1
+		where
+		warnrec_id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+</mapper>

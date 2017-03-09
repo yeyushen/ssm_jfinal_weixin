@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AgentOrderMapper">
+
+	<!-- 所有列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		o.*,
+		m.nick_name,
+		m.openid open_id,
+		m.parent_id,
+		m.id
+		from
+		(
+		select
+		e.*,
+		p.product_name
+		from
+		weixin_order e
+		left join
+		weixin_product p
+		on
+		e.product_id = p.product_id
+		where
+		e.dr =0
+		and e.paystatus!=0
+		and e.status!=0
+		) o
+		left join
+		weixin_member m
+		on
+		o.openid = m.openid
+		where 
+			1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			o.order_id LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.product_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- or w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.paystatus!=null and pd.paystatus!=''"><!-- 支付状态检索 -->
+			and o.paystatus = #{pd.paystatus}
+		</if>
+		<if test="pd.status!=null and pd.status!=''"><!-- 订单状态检索 -->
+			and o.status = #{pd.status}
+		</if>
+		<if test="pd.settlement_method!=null and pd.settlement_method!=''"><!-- 支付方式检索 -->
+			and o.settlement_method = #{pd.settlement_method}
+		</if>
+		<if test="pd.chnnl_type!=null and pd.chnnl_type!=''"><!-- 运营商检索 -->
+			and o.chnnl_type = #{pd.chnnl_type}
+		</if>
+		<if test="pd.region!=null and pd.region!=''"><!-- 流量类型检索 -->
+			and o.region = #{pd.region}
+		</if>
+		AND o.paystatus = 1
+		AND	m.openid IN (${pd.childIds})
+		order by o.recharge_dttm desc
+	</select>
+	
+		<!-- 统计 -->
+	<select id="countOrder" parameterType="page" resultType="pd">
+		select
+		count(o.product_id) total,
+		IFNULL(SUM(IFNULL(o.product_price,0)),0) totalProductPrice,
+		IFNULL(SUM(IFNULL(o.settlement_price,0)),0) totalSettlementPrice,
+		IFNULL(SUM(IFNULL(o.cost_price,0)),0) totalCostPrice,
+		IFNULL(SUM(IFNULL(o.profit,0)),0) totalProfit
+		from
+		(
+		select
+		e.*,
+		p.product_name
+		from
+		weixin_order e
+		left join
+		weixin_product p
+		on
+		e.product_id = p.product_id
+		where
+		e.dr =0
+		and e.paystatus!=0
+		and e.status!=0
+		) o
+		left join
+		weixin_member m
+		on
+		o.openid = m.openid
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			o.order_id LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.product_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- or w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.status!=null and pd.status!=''">
+			and o.status = #{pd.status}
+		</if>
+		<if test="pd.settlement_method!=null and pd.settlement_method!=''">
+			and o.settlement_method = #{pd.settlement_method}
+		</if>
+		<if test="pd.chnnl_type!=null and pd.chnnl_type!=''">
+			and o.chnnl_type = #{pd.chnnl_type}
+		</if>
+		<if test="pd.region!=null and pd.region!=''">
+			and o.region = #{pd.region}
+		</if>
+		AND o.paystatus = 1
+		AND	m.openid IN (${pd.childIds})
+	<!-- 	order by o.recharge_dttm desc -->
+	</select>
+</mapper>

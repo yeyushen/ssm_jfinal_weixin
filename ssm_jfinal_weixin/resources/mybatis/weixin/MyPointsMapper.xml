@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyPointsMapper">
+
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		p.*,
+		m.nick_name,
+		m.create_date
+		from
+		weixin_mypoints p
+		left join
+		weixin_member m
+		on
+		m.openid = p.open_id
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		and p.dr = 0
+		and m.dr = 0
+		order by m.create_date DESC
+	</select>
+	
+	<!-- 根据openId获取积分 -->
+	<select id="findByOpenId" parameterType="String" resultType="pd">
+	SELECT * FROM weixin_mypoints WHERE open_id = #{open_id}
+	</select>
+
+</mapper>

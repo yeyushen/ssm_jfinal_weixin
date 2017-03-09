@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>佣金快报</title>
+	
+    <!-- <meta name="keywords" content="名片,keyword2,keyword3">
+    <meta name="description" content="推广名片"> -->
+    
+    <meta http-equiv="Expires" CONTENT="0">  
+	<meta http-equiv="Cache-Control" CONTENT="no-cache">  
+	<meta http-equiv="Pragma" CONTENT="no-cache"> 
+	<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1" >
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+	<link href="css/main.css?v=40" type=text/css rel=stylesheet>
+	<style>
+	html,body{height:100%;}
+	</style>
+  </head>
+  
+  <body>
+    <img id="img_qrcode" style="position:fixed;" src=""  height="100%" width="100%" /> 
+  </body>
+  
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="js/skywayct.js?v=40"></script>
+  <script>
+  	
+	function loaded() {	
+		if(Request.QueryString("code") || Request.QueryString("open_id"))
+		{	
+			if(Request.QueryString("code"))
+			{
+				fnloading("正在读取数据...")
+				var CODE = Request.QueryString("code");
+				var open_id = XMLHttpURL("../wxclient?code="+CODE);
+			}else{
+				var open_id = Request.QueryString("open_id")
+			}
+				
+			fnMycommission(1,open_id);
+		}
+		else{
+			fnPopTip("当前没有记录"," ");
+			setTimeout(function(){
+				if (isWeiXin()){
+					WeixinJSBridge.call("closeWindow");
+				}
+			}, 1000);
+		}
+	}
+	document.addEventListener('DOMContentLoaded', loaded, false);
+
+	var Comis_n_popwin,Comis_n_page = 1,Comis_n_totalpage;
+	function fnMycommission(page,open_id){
+		page = page ? page : 1;
+		if(Comis_n_totalpage && Comis_n_page > Comis_n_totalpage){return;}
+		fnloading("加载佣金快报...")
+		XMLHttpURL_POST("../comis?open_id="+open_id+"&page="+page+"&size=10", function(data){
+				fnloading()
+				var objdata = eval("(" + data + ")");
+				if(objdata.errcode == "-1"){
+					mAlert(objdata.errmsg);
+					return;
+				}
+				
+				var shtml = "";
+				if(objdata.commission.list.length > 0){
+					Comis_n_totalpage = objdata.commission.totalPage
+					var rows = objdata.commission.list;
+					for (var n = 0; n < rows.length; n++ ){
+						shtml += '<div class="mxItem" style="font-size:12px;"><table>'
+						var strorder = "名称："+ rows[n].nick_name
+						shtml += '<tr><td><div class="mxBz">'+strorder+'<br>订单金额：¥ '+formatPrice(Math.abs(rows[n].cost_price), 2)+'</div>'
+						var strstatus = rows[n].lv=="1" ? '<span style="padding-left:10px;color:red">(一级下线)<span>' : (rows[n].lv =="2" ? '<span style="padding-left:10px;color:red">(二级下线)<span>' : (rows[n].lv =="3" ? '<span style="padding-left:10px;color:red">(三级下线)<span>' : ''))
+						shtml += '<div class="mxRq">'+rows[n].ts+strstatus+' </div></td><td class="mxJeOut"><strong> ¥ ' + formatPrice(Math.abs(rows[n].commission), 2) + '</strong></td></tr>'
+						shtml += '</table></div>'
+					}
+					
+					if(!Comis_n_popwin)	
+						Comis_n_popwin = fnPopWin("佣金快报", shtml, '', 'red','','',fnclose);
+					else
+						$(Comis_n_popwin).find(".popWinContent").append(shtml);
+					
+		            $(Comis_n_popwin).find(".popWinContent").scroll(function(){
+		            	if(Comis_n_totalpage && Comis_n_page > Comis_n_totalpage){return;}
+		            	var scrollTop = parseInt($(this).scrollTop());
+		            	var windowHeight = parseInt($(this).height());
+		                var scrollHeight = parseInt($(this)[0].scrollHeight);
+		                if((scrollTop + windowHeight) >= scrollHeight-50)
+		                {
+		                	Comis_n_page +=1;
+		                	fnMycommission(Comis_n_page,open_id);
+		                }
+		            })
+				}else{
+					fnPopTip("没有任何佣金记录！"," ");
+					setTimeout(function(){
+						if (isWeiXin()){
+							WeixinJSBridge.call("closeWindow");
+						}
+					}, 1000);
+				}
+		});
+	}
+	
+	function fnclose(){
+		setTimeout(function(){
+			if (isWeiXin()){
+				WeixinJSBridge.call("closeWindow");
+			}
+		}, 1000);
+	}
+  </script>
+</html>

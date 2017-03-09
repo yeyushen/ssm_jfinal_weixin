@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MyRepository/!svn/ver/4421/skywayct/src/com/jfinal/weixin/sdk/kit
+END
+IpKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/kit/IpKit.java
+END
+ParaMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/kit/ParaMap.java
+END
+MsgEncryptKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/kit/MsgEncryptKit.java
+END
+PaymentKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/7828/skywayct/src/com/jfinal/weixin/sdk/kit/PaymentKit.java
+END
+ToolKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/4421/skywayct/src/com/jfinal/weixin/sdk/kit/ToolKit.java
+END
+SignatureCheckKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/kit/SignatureCheckKit.java
+END
+XmlKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/48/skywayct/src/com/jfinal/weixin/sdk/kit/XmlKit.java
+END
+ImageKit.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/MyRepository/!svn/ver/2208/skywayct/src/com/jfinal/weixin/sdk/kit/ImageKit.java
+END

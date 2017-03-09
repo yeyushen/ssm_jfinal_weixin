@@ -1,0 +1,227 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/MyRepository/!svn/ver/4380/skywayct/resources/mybatis/weixin
+END
+BlackMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/1193/skywayct/resources/mybatis/weixin/BlackMapper.xml
+END
+CommandMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/weixin/CommandMapper.xml
+END
+CashMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/5405/skywayct/resources/mybatis/weixin/CashMapper.xml
+END
+PhoneChargeOrderMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MyRepository/!svn/ver/983/skywayct/resources/mybatis/weixin/PhoneChargeOrderMapper.xml
+END
+OrderMemberInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MyRepository/!svn/ver/1792/skywayct/resources/mybatis/weixin/OrderMemberInfoMapper.xml
+END
+ProductMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/9272/skywayct/resources/mybatis/weixin/ProductMapper.xml
+END
+CommissionMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/920/skywayct/resources/mybatis/weixin/CommissionMapper.xml
+END
+AgentProfitMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/1290/skywayct/resources/mybatis/weixin/AgentProfitMapper.xml
+END
+MyPointsMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/810/skywayct/resources/mybatis/weixin/MyPointsMapper.xml
+END
+ImgmsgMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/weixin/ImgmsgMapper.xml
+END
+DepartmentMapper1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/468/skywayct/resources/mybatis/weixin/DepartmentMapper1.xml
+END
+OrderPayAgainMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MyRepository/!svn/ver/1056/skywayct/resources/mybatis/weixin/OrderPayAgainMapper.xml
+END
+HistoryWarningMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/1320/skywayct/resources/mybatis/weixin/HistoryWarningMapper.xml
+END
+DiscountMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/143/skywayct/resources/mybatis/weixin/DiscountMapper.xml
+END
+OrderPressMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/4123/skywayct/resources/mybatis/weixin/OrderPressMapper.xml
+END
+AgentOrderMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/1291/skywayct/resources/mybatis/weixin/AgentOrderMapper.xml
+END
+OperatorMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/MyRepository/!svn/ver/4380/skywayct/resources/mybatis/weixin/OperatorMapper.xml
+END
+MyWalletMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MyRepository/!svn/ver/921/skywayct/resources/mybatis/weixin/MyWalletMapper.xml
+END
+AgentMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/833/skywayct/resources/mybatis/weixin/AgentMapper.xml
+END
+OrderWarningMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/MyRepository/!svn/ver/1330/skywayct/resources/mybatis/weixin/OrderWarningMapper.xml
+END
+WeixinMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MyRepository/!svn/ver/48/skywayct/resources/mybatis/weixin/WeixinMapper.xml
+END
+MemberQrcodeMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/MyRepository/!svn/ver/1252/skywayct/resources/mybatis/weixin/MemberQrcodeMapper.xml
+END
+MemberRelationMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/1794/skywayct/resources/mybatis/weixin/MemberRelationMapper.xml
+END
+MyMenuMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/954/skywayct/resources/mybatis/weixin/MyMenuMapper.xml
+END
+CommissionRecord.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/866/skywayct/resources/mybatis/weixin/CommissionRecord.xml
+END
+OrderMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/2936/skywayct/resources/mybatis/weixin/OrderMapper.xml
+END
+MemberTransferMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MyRepository/!svn/ver/641/skywayct/resources/mybatis/weixin/MemberTransferMapper.xml
+END
+OrdinaryMemberMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MyRepository/!svn/ver/1777/skywayct/resources/mybatis/weixin/OrdinaryMemberMapper.xml
+END
+QueryInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/1326/skywayct/resources/mybatis/weixin/QueryInfoMapper.xml
+END
+MemberGeographic.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/1265/skywayct/resources/mybatis/weixin/MemberGeographic.xml
+END
+TextmsgMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/12/skywayct/resources/mybatis/weixin/TextmsgMapper.xml
+END
+WarningMemberMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MyRepository/!svn/ver/1292/skywayct/resources/mybatis/weixin/WarningMemberMapper.xml
+END
+MemberLevelMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MyRepository/!svn/ver/468/skywayct/resources/mybatis/weixin/MemberLevelMapper.xml
+END
+ProfitMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MyRepository/!svn/ver/1021/skywayct/resources/mybatis/weixin/ProfitMapper.xml
+END
+BlackMemberMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MyRepository/!svn/ver/1149/skywayct/resources/mybatis/weixin/BlackMemberMapper.xml
+END
+WarningRecordMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MyRepository/!svn/ver/1240/skywayct/resources/mybatis/weixin/WarningRecordMapper.xml
+END
+OrderFailMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MyRepository/!svn/ver/2936/skywayct/resources/mybatis/weixin/OrderFailMapper.xml
+END

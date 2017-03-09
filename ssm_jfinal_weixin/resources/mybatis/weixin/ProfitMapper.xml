@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProfitMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_order
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		order_id,
+		prepay_id,
+		transaction_id,
+		openid,
+		phone,
+		effective_type,
+		attribution,
+		amount,
+		product_id,
+		product_price,
+		settlement_price,
+		cost_price,
+		profit,
+		settlement_method,
+		status,
+		recharge_dttm,
+		note,
+		serial,
+		interface_id,
+		log,
+		chnnl_type,
+		dr
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{openid},
+		#{nick_name},
+		#{name},
+		#{photo},
+		#{sex},
+		#{phone},
+		#{mobile},
+		#{email},
+		#{create_date},
+		#{canceled},
+		#{level_id},
+		#{parent_id},
+		#{ordinarymember_id},
+		#{dr}
+	</sql>
+
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		)
+		values
+		(
+		#{openid},
+		#{nick_name},
+		#{name},
+		#{photo},
+		#{sex},
+		#{phone},
+		#{mobile},
+		#{email},
+		#{create_date},
+		#{canceled},
+		#{level_id},
+		#{parent_id},
+		#{ordinarymember_id},
+		0
+		)
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where
+		ordinarymember_id = #{ordinarymember_id}
+	</delete>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		nick_name = #{nick_name},
+		name = #{name},
+		photo = #{photo},
+		sex = #{sex},
+		phone = #{phone},
+		mobile = #{mobile},
+		email = #{email},
+		create_date = #{create_date},
+		canceled = #{canceled},
+		level_id = #{level_id},
+		parent_id = #{parent_id}
+		where
+		openid = #{openid}
+	</update>
+
+	<!-- 根据id删除(不是真正删除，修改dr由0变为1) -->
+	<update id="updateDrById" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		dr = 1
+		where
+		openid = #{openid}
+	</update>
+
+	<!-- 根据id批量删除(批量修改dr由0变为1) -->
+	<update id="updateAllDr" parameterType="String">
+		update
+		<include refid="tableName"></include>
+		set
+		dr = 1
+		where
+		openid in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		w.openid,
+		w.nick_name,
+		w.name,
+		w.photo,
+		w.sex,
+		w.phone,
+		w.mobile,
+		w.email,
+		w.create_date,
+		w.canceled,
+		w.level_id,
+		w.parent_id,
+		w.ordinarymember_id,
+		w.dr,
+		m.level_name
+		from
+		weixin_member w
+		left join
+		member_level m
+		on
+		w.level_id = m.id
+		where
+		w.openid = #{openid}
+	</select>
+	
+	<!-- 所有列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT 
+		o.order_id,
+		o.order_no,
+		h.nick_name,
+		o.phone,
+		o.recharge_dttm,
+		o.settlement_method,
+		o.product_price,
+		o.cost_price,
+		o.settlement_price,
+		o.profit_price,
+		o.profit_price1,
+		o.profit_price2,
+		o.profit_price3,
+		o.settlement_price-o.cost_price-IFNULL(o.profit_price1, 0)-IFNULL(o.profit_price2, 0)-IFNULL(o.profit_price3, 0) commission,
+		m.product_name FROM weixin_order o 
+		LEFT JOIN weixin_product m ON o.product_id = m.product_id 
+		left join weixin_member h on h.openid = o.openid  
+		WHERE 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+			(
+			m.product_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.phone LIKE CONCAT(CONCAT('%', #{pd.keywords}), '%')
+			or
+			h.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}), '%')
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''">
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''">
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>		
+		<if test="pd.settlement_method!=null and pd.settlement_method!=''">
+		and o.settlement_method = #{pd.settlement_method}
+		</if>		
+		and o.paystatus = 1
+		and o.status = 1
+		<if test="pd.is_today != null and pd.is_today != 1 ">
+		AND TO_DAYS(NOW()) - TO_DAYS(o.recharge_dttm) = 0
+		</if>
+		ORDER BY o.order_no DESC
+	</select>
+	
+	
+	<!-- 打印 -->
+	<select id="printList" parameterType="pd" resultType="pd">
+		SELECT 
+		o.order_id,
+		o.order_no,
+		h.nick_name,
+		o.phone,
+		TO_DAYS(o.recharge_dttm) today,
+		DATE_FORMAT(o.recharge_dttm,'%Y-%m-%d') recharge_dttm,
+		CASE WHEN o.settlement_method=1 THEN '微信支付' 
+        WHEN o.settlement_method=2 THEN '钱包支付' ELSE '' END settlement_method,
+		o.product_price,
+		o.cost_price,
+		o.settlement_price,
+		o.profit_price,
+		o.profit_price1,
+		o.profit_price2,
+		o.profit_price3,
+		o.settlement_price-o.cost_price-IFNULL(o.profit_price1, 0)-IFNULL(o.profit_price2, 0)-IFNULL(o.profit_price3, 0) commission,
+		CASE WHEN o.chnnl_type=1 THEN '中国移动' WHEN o.chnnl_type=2 THEN '中国联通' WHEN o.chnnl_type=3 THEN '中国电信' ELSE '' END chnnl_type,
+		m.product_name FROM weixin_order o 
+		LEFT JOIN weixin_product m ON o.product_id = m.product_id 
+		left join weixin_member h on h.openid = o.openid  
+		WHERE 1=1
+		<if test="keywords!= null and keywords != ''">
+			and
+			(
+			m.product_name LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+			or
+			o.phone LIKE CONCAT(CONCAT('%', #{keywords}), '%')
+			or
+			h.nick_name LIKE CONCAT(CONCAT('%', #{keywords}), '%')
+			)
+		</if>
+		<if test="lastStart!=null and lastStart!=''">
+			and o.recharge_dttm &gt;= #{lastStart}
+		</if>
+		<if test="lastEnd!=null and lastEnd!=''">
+			and o.recharge_dttm &lt;= #{lastEnd}
+		</if>		
+		<if test="settlement_method!=null and settlement_method!=''">
+		and o.settlement_method = #{settlement_method}
+		</if>		
+		and o.paystatus = 1
+		and o.status = 1
+		<if test="is_today != null and is_today != 1 ">
+		AND TO_DAYS(NOW()) - TO_DAYS(o.recharge_dttm) = 0
+		</if>
+		ORDER BY o.order_no DESC
+	</select>	
+	
+	<!-- 统计 -->
+	<select id="countProfit" parameterType="page" resultType="pd">
+		SELECT 
+		count(o.product_id) total,
+		IFNULL(SUM(IFNULL(o.product_price,0)),0) totalProductPrice,
+		IFNULL(SUM(IFNULL(o.settlement_price,0)),0) totalSettlementPrice,
+		IFNULL(SUM(IFNULL(o.cost_price,0)),0) totalCostPrice,
+		IFNULL(SUM(IFNULL(o.settlement_price,0)-IFNULL(o.cost_price,0)-IFNULL(o.profit_price1, 0)-IFNULL(o.profit_price2, 0)-IFNULL(o.profit_price3, 0)),0) totalcommission,
+		IFNULL(SUM(IFNULL(o.profit_price,0)),0) totalProfitPrice,
+		IFNULL(SUM(IFNULL(o.profit_price1,0)),0) totalProfitPrice1,
+		IFNULL(SUM(IFNULL(o.profit_price2,0)),0) totalProfitPrice2,
+		IFNULL(SUM(IFNULL(o.profit_price3,0)),0) totalProfitPrice3 
+		FROM weixin_order o 
+		LEFT JOIN weixin_product m ON o.product_id = m.product_id 
+		left join weixin_member h on h.openid = o.openid  
+		WHERE 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+			(
+			m.product_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.phone LIKE CONCAT(CONCAT('%', #{pd.keywords}), '%')
+			or
+			h.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}), '%')
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''">
+			and o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''">
+			and o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>		
+		<if test="pd.settlement_method!=null and pd.settlement_method!=''">
+		and o.settlement_method = #{pd.settlement_method}
+		</if>		
+		and o.paystatus = 1
+		and o.status = 1
+		<if test="pd.is_today != null and pd.is_today != 1 ">
+		AND TO_DAYS(NOW()) - TO_DAYS(o.recharge_dttm) = 0
+		</if>		
+		ORDER BY o.order_no DESC
+		
+	</select>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		ordinarymember_id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- () -->
+</mapper>

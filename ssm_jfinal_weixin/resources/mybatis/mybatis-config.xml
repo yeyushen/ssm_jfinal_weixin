@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"  
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings> 
+        <setting name="cacheEnabled" value="true" /><!-- 全局映射器启用缓存 -->   
+        <setting name="useGeneratedKeys" value="true" /> 
+        <setting name="defaultExecutorType" value="REUSE" /> 
+    </settings>
+
+	<typeAliases>
+		<typeAlias type="com.skywayct.entity.system.User" alias="User"/>
+		<typeAlias type="com.skywayct.entity.system.Role" alias="Role"/>
+		<typeAlias type="com.skywayct.entity.system.Menu" alias="Menu"/>
+		<typeAlias type="com.skywayct.entity.system.Dictionaries" alias="Dictionaries"/>
+		<typeAlias type="com.skywayct.entity.system.Department" alias="Department"/>
+		<typeAlias type="com.skywayct.entity.system.Department1" alias="Department1"/>
+		<typeAlias type="com.skywayct.entity.weixin.Member" alias="Member"/>
+		<typeAlias type="com.skywayct.entity.weixin.Operator" alias="Operator"/>
+		<typeAlias type="com.skywayct.entity.weixin.OrderWarning" alias="OrderWarning"/>
+		<typeAlias type="com.skywayct.util.PageData" alias="pd"/>
+		<!-- 分页 -->
+		<typeAlias type="com.skywayct.entity.Page" alias="Page"/>
+	</typeAliases>
+
+	<plugins>
+		<plugin interceptor="com.skywayct.plugin.PagePlugin">
+			<property name="dialect" value="mysql"/>
+			<property name="pageSqlId" value=".*listPage.*"/>
+		</plugin>
+	</plugins>
+	
+</configuration>

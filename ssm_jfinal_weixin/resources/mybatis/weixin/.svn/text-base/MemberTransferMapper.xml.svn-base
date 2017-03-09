@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberTransferMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_member
+	</sql>
+	<!-- 根据id批量更新(批量更新父节点) -->
+	<update id="updateAllParent" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		parent_id = #{parent_id}
+		where
+		openid in
+		<foreach item="item" index="index" collection="idList" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<!-- 新增 -->
+	<insert id="setOperator" parameterType="pd">
+		insert into
+		weixin_transfer_record
+		(
+		transfer_record_id,
+		transfer_openid,
+		to_transfer_openid,
+		operator
+		)
+		values
+		(
+		#{transfer_record_id},
+		#{openid},
+		#{parent_id},
+		#{username}
+		)
+	</insert>
+
+	<!-- 列表ByName -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select
+		openid,
+		nick_name
+		from
+		weixin_member
+		where
+		1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		and weixin_member.dr = 0
+	</select>
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+	<![CDATA[
+		select
+		w.openid,
+		w.nick_name, 
+		w.create_date,	
+		m.nick_name 'parent_name'
+		from 
+		weixin_member w
+		left join
+		weixin_member m
+		on (w.parent_id=m.openid)
+	]]>
+		where
+		1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		and w.dr = 0
+		order by w.create_date desc
+	</select>
+
+	<!-- 列出选择的会员 -->
+	<select id="listManay" parameterType="String" resultType="pd">
+		select
+		openid,
+		nick_name
+		from
+		weixin_member
+		where
+		openid in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+
+</mapper>

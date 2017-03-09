@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+
+<html style="background-color:#ffffff">
+
+<head>
+
+    <title>流量充值</title>
+
+    <!-- meta tags start -->
+
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=no, initial-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta name="App-Config"
+          content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <!-- meta tags end -->
+
+
+    <!-- CSS files start -->
+
+    <link href="css/framework.css?v=68" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/style.css?v=68" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/main.css?v=15" type=text/css rel=stylesheet>
+    <link href="css/icon.css?v=68" type=text/css rel=stylesheet>
+    <!-- CSS files end -->
+
+</head>
+
+<body class="body-div">
+
+<div>
+    <div>
+        <div >
+          <div>
+          	<div id="goodinfo2" style="display: block;"><div class="ngoodcuttab" id="ngoodcuttab"><div class="fl" onclick="fnShowProduct(1)" ><span class="tabsel">移动</span></div><div class="fl"onclick="fnShowProduct(2)"><span class="">联通</span></div><div class="fr" onclick="fnShowProduct(3)"><span class="">电信</span></div></div>
+          	<div class="phone-div">
+                  <fieldset>
+                      <input type="tel" value="" class="homeSearchFormField" id="phone" maxlength="14" placeholder="输入手机号码" autocomplete="on" />
+				  	  <div class="buttonWrapper homeSearchFormSubmitButton" id="type_card" onclick="$('#phone').focus()"></div>
+                  </fieldset>
+                  <div id="notice" style="margin-top:5px;color:red;">通知：</div>
+            </div>
+          	<div id="goodinfoDet"></div>
+          </div>
+        </div>
+
+        <div class="pageContentWrapper buytoolbar" style="display:none;">
+            <div style="float:left;width:60%;">
+            	<label id="productprice" style="margin-bottom:-35px;"><span style="color:#fa3b56;font-weight:bold;" class="pro_price"></span><br><span class="pro_type"></span><br></label>
+            </div>
+            <div class="buy">
+            	购买
+            </div>
+        </div>
+    </div>
+
+    <div class="footerWrapper recfoot" style="margin-top:30px;">
+    
+    	<div>
+    		<span style="float:left;width:40%;"><a href="tel:02029016991" style="font-weight:bold;text-decoration: underline;color:#999999;">在线客服</a></span>
+    		<span style="float:center;"><a href="http://w.url.cn/s/AiLZrJx" style="font-weight:bold;text-decoration: underline;color:#9E9E9E;">订单查询</a></span>
+    		<span style="float:right;width:32%;text-align:right;"><a href="rechargehelp.html" style="font-weight:bold;text-decoration: underline;color:#9E9E9E;">常见问题?</a></span>
+    	</div>
+    
+   	 	<!-- <div class="copyrightWrapper" style="text-align:center;color:#999999;line-height:20px;padding-top:10px;">
+			<span>技术支持：迪士恩信息科技  <br></span> 
+			<span>商务合作：<a href="tel:02029016991" style="font-weight:bold;text-decoration: underline;color:#999999;">020-29016991</a> &nbsp;&nbsp;</span>
+
+        </div> -->
+    </div>
+
+</div>
+
+<!-- website wrapper ends -->
+
+</body>
+<!-- JavaScript files start -->
+
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/effects.jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery.nivo-slider.min.js"></script>
+<script type="text/javascript" src="js/jquery.colorbox.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=G5IducoC64P4FkSIEs0UAca0zNGstyNg"></script>
+<script type="text/javascript" src="http://www.veryhuo.com/uploads/Common/js/jQuery.md5.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/skywayct.js?v=68"></script>
+<script type="text/javascript" src="js/nrecharge.js?v=15"></script>
+
+<!-- JavaScript files end -->
+
+
+</html>
+

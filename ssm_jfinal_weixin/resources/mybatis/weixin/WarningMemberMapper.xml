@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WarningMemberMapper">
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT
+		w.openid,
+		w.nick_name,
+		w.photo,
+		w.create_date,
+		IFNULL(w.warning_tagid,0) warning_tagid, 
+		a.warning_tagname
+		FROM
+		weixin_member w
+		left join
+		weixin_order_warning a
+		on w.warning_tagid = a.warning_tagid
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			w.openid LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			w.name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			a.warning_tagname LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and w.create_date &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and w.create_date &lt;= #{pd.lastEnd}
+		</if>
+		<if test="pd.warning_tagid==null or pd.warning_tagid==''">
+			and w.warning_tagid != '0'
+		</if>
+		<if test='pd.warning_tagid == "0"'>
+			and w.warning_tagid = '0' or w.warning_tagid is null 
+		</if>
+		and w.dr = 0
+		order by w.create_date desc
+	</select>
+
+	<!-- 列出所有会员昵称和openid -->
+	<select id="listAllMember" parameterType="pd" resultType="pd">
+		select
+		openid,
+		nick_name
+		from
+		weixin_member
+	</select>
+
+	<!-- 根据id批量更新(批量更新父节点) -->
+	<update id="updateAllWarning" parameterType="pd">
+		update
+		weixin_member
+		set
+		warning_tagid = #{warning_tagid}
+		where
+		openid in
+		<foreach item="item" index="index" collection="idList" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+</mapper>

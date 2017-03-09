@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  	<title>活动排行</title>
+    <meta http-equiv="Expires" CONTENT="0">  
+	<meta http-equiv="Cache-Control" CONTENT="no-cache">  
+	<meta http-equiv="Pragma" CONTENT="no-cache"> 
+	<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1" >
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
+	<link href="css/main.css?v=71" type=text/css rel=stylesheet>
+	<link href="css/icon.css?v=71" type=text/css rel=stylesheet>		
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  
+  <body>
+    <div id="act_content"></div>
+  </body>
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <script type="text/javascript" src="js/skywayct.js?v=71"></script>
+  <script>
+  function loaded() {	
+		if(Request.QueryString("code"))
+		{	
+			fnloading("正在读取数据...");
+			XMLHttpURL_POST("../wxclient?code="+Request.QueryString("code")+"&url="+window.location, function(data){
+				fnloading();
+				var objdata = eval("(" + data + ")");
+				if(objdata.errcode == "-1"){
+					mAlert(objdata.errmsg);
+					return;
+				}else{
+					openTop();
+					initWxJs(objdata.appid,objdata.timestamp,objdata.noncestr,objdata.signature,objdata.open_id);
+				}
+			});
+		}
+		else{
+			fnPopTip("活动不存在或已结束！"," ");
+		}
+	}
+	document.addEventListener('DOMContentLoaded', loaded, false);
+  
+  
+  function openTop(){
+	fnloading("加载排行榜数据...");
+	var shtml = '<div id="ranking-list" style="width:100%;height:100%;margin:0 auto; padding-bottom:70px;overflow:auto;background-color:#FF9800;">';	
+		shtml += '<div>';
+		shtml += ' <h3 class="list-group-item-heading text-center" style="background:#ec5251;color:#fff;margin-bottom:0px;height: 36px;padding-top: 5px;" id="topless">排行榜</h3>'
+	    shtml += ' <ul class="list-group list-group-item2 prize-name">';
+	    XMLHttpURL_POST("../actreport?page=1&size=50", function(data){	
+	    	fnloading();
+	    	var dataobj = eval("(" + data + ")");
+	    	if(dataobj.code==-1){
+	    		fnPopTip(data.msg, " ");
+	    		return;
+	    	}
+	    	var  list = dataobj.myteams.list;
+	    	var  len = list.length;
+	    	var  top = dataobj.top;
+	    	for(var i=0;i<len;i++){
+	    		shtml += '	<li style="'+ ((top<=50 && list[i].openid==dataobj.openid) ? 'background-color: rgba(246, 247, 245, 0.45);':'') +'"><table style="width: 100%;"><tbody><tr><td style="text-align:left;color:red;font-style:italic;font-weight:bold;width:25%;"><span class="f10">Top</span> <span class="topn">'+(i+1)+'</span></td><td style="text-align: center;width:40%;"><div style="word-break:keep-all; white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><img src="'+ list[i].photo +'" width="30px;" height="30px;"><div style="width:120px;">&nbsp;'+list[i].nick_name+'</div></div></td><td align="right" class="billState" style="text-align: right;width:25%;"><span style="color:#FF006C">'+list[i].cout+'</span></td></tr></tbody></table></li>';
+	    	}
+	    	if(len==50) shtml += '	<li class="list-group-item" style="text-align:center;">...</li>';
+	    	if(len==0)	shtml += '	<li class="list-group-item" style="text-align:center;">暂无记录</li>';
+	    	shtml += ' </ul></div>';
+	        shtml += '</div>';
+	            
+	        $('#act_content').html(shtml);
+	    	
+	    	if(parseInt(top) > 100) $('#topless').html("排行榜(您与第100名相差"+dataobj.less+"粉丝)");
+	    	if(parseInt(top) <= 100) $('#topless').html("排行榜(<span style='font-size:16px;'>当前排名"+top+"</span>)");
+	    	
+	    });      
+	}
+  </script>	
+</html>

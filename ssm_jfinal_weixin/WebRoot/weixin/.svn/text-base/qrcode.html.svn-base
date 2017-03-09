@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>我的推广名片</title>
+    <meta http-equiv="Expires" CONTENT="0">  
+	<meta http-equiv="Cache-Control" CONTENT="no-cache">  
+	<meta http-equiv="Pragma" CONTENT="no-cache"> 
+	<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1" >
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link href="css/main.css?v=52" type=text/css rel=stylesheet>
+	<style>
+	html,body{height:100%;}
+	</style>
+  </head>
+  
+  <body>
+    <img id="img_qrcode" style="position:fixed;" src=""  height="100%" width="100%" /> 
+  </body>
+  
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <script type="text/javascript" src="js/skywayct.js?v=52"></script>
+  <script>
+	function loaded() {	
+		if(Request.QueryString("code"))
+		{	
+			fnloading("正在读取数据...");
+			XMLHttpURL_POST("../wxclient?code="+Request.QueryString("code")+"&url="+window.location, function(data){
+				fnloading();
+				var objdata = eval("(" + data + ")");
+				if(objdata.errcode == "-1"){
+					mAlert(objdata.errmsg);
+					return;
+				}else{
+					getuserInfo();
+					initWxJs(objdata.appid,objdata.timestamp,objdata.noncestr,objdata.signature,objdata.open_id);
+				}
+			});
+		}
+		else{
+			fnPopTip("我的推广名片不存在"," ");
+		}
+	}
+	document.addEventListener('DOMContentLoaded', loaded, false);
+
+	function getuserInfo(open_id){
+		setTimeout(function(){
+			var objs = eval("(" + XMLHttpURL("../wxclient") + ")"); 
+			if(objs.code){mAlert(objs.msg);}
+			$("#img_qrcode").attr("src","../"+objs.qrcode+"?"+Math.random());
+	        fnloading("");
+	    },500);
+	}
+  </script>
+</html>

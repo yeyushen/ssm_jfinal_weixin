@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderPressMapper">
+	
+	<!-- 列表 -->
+	
+	<select id="datalistPage" parameterType="page" resultType="pd">
+SELECT
+	o.phone,
+	m.`name`,
+	p.product_name,
+	o.product_price,
+	o.settlement_price,
+	o.chnnl_type,
+	o.note,
+	o.log,
+	o.paystatus,
+	o.settlement_method,
+	o.`status`,
+	o.recharge_dttm,
+	o.attribution,
+	o.openid,
+	o.order_id
+FROM
+	weixin_order o
+left JOIN weixin_product p ON o.product_id = p.product_id
+left JOIN weixin_member m ON o.openid = m.openid
+WHERE 1=1 AND o.type =2 AND o.dr = 0 AND p.dr = 0 AND o.log is null
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			o.order_id LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.phone LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- or w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			AND o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			AND o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		ORDER BY o.recharge_dttm DESC
+	</select>
+	
+	<!-- 统计压单订单列表 -->
+	
+	<select id="countOrder" parameterType="page" resultType="pd">
+SELECT
+		COUNT(o.product_id) total,
+		IFNULL(SUM(IFNULL(o.product_price,0)),0) totalProductPrice,
+		IFNULL(SUM(IFNULL(o.settlement_price,0)),0) totalSettlementPrice,
+		IFNULL(SUM(IFNULL(o.cost_price,0)),0) totalCostPrice,
+		IFNULL(SUM(IFNULL(o.profit,0)),0) totalProfit
+
+FROM
+	weixin_order o
+INNER JOIN weixin_product p ON o.product_id = p.product_id
+AND o.type =2
+AND o.dr = 0
+AND p.dr = 0
+INNER JOIN weixin_member m ON o.openid = m.openid
+WHERE 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			AND
+			(
+			o.order_id LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			m.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			o.phone LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			<!-- or w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			<!-- 根据需求自己加检索条件 字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or 字段2 
+				LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') -->
+			)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			AND o.recharge_dttm &gt;= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			AND o.recharge_dttm &lt;= #{pd.lastEnd}
+		</if>
+		ORDER BY o.recharge_dttm DESC
+	</select>
+
+
+	<!-- () -->
+</mapper>

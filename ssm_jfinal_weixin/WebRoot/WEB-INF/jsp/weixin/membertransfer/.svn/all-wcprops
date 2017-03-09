@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MyRepository/!svn/ver/759/skywayct/WebRoot/WEB-INF/jsp/weixin/membertransfer
+END
+membertransfer_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/MyRepository/!svn/ver/758/skywayct/WebRoot/WEB-INF/jsp/weixin/membertransfer/membertransfer_list.jsp
+END
+copymembertransfer_transferList.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/MyRepository/!svn/ver/239/skywayct/WebRoot/WEB-INF/jsp/weixin/membertransfer/copymembertransfer_transferList.jsp
+END
+membertransfer_transferList.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/MyRepository/!svn/ver/759/skywayct/WebRoot/WEB-INF/jsp/weixin/membertransfer/membertransfer_transferList.jsp
+END
+membertransfer_include.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/MyRepository/!svn/ver/239/skywayct/WebRoot/WEB-INF/jsp/weixin/membertransfer/membertransfer_include.jsp
+END
+membertransfer_edit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/MyRepository/!svn/ver/239/skywayct/WebRoot/WEB-INF/jsp/weixin/membertransfer/membertransfer_edit.jsp
+END
+membertransfer_msg.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MyRepository/!svn/ver/239/skywayct/WebRoot/WEB-INF/jsp/weixin/membertransfer/membertransfer_msg.jsp
+END

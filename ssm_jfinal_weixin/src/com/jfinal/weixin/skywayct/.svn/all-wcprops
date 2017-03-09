@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MyRepository/!svn/ver/4510/skywayct/src/com/jfinal/weixin/skywayct
+END
+WeixinTransfersController.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/MyRepository/!svn/ver/955/skywayct/src/com/jfinal/weixin/skywayct/WeixinTransfersController.java
+END
+WeixinPayAgainController.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/MyRepository/!svn/ver/1055/skywayct/src/com/jfinal/weixin/skywayct/WeixinPayAgainController.java
+END
+WeixinApiController.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/1975/skywayct/src/com/jfinal/weixin/skywayct/WeixinApiController.java
+END
+WeixinMyPointController.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/MyRepository/!svn/ver/850/skywayct/src/com/jfinal/weixin/skywayct/WeixinMyPointController.java
+END
+RedPackApiController.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/MyRepository/!svn/ver/7826/skywayct/src/com/jfinal/weixin/skywayct/RedPackApiController.java
+END
+FeedBackController.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/MyRepository/!svn/ver/4510/skywayct/src/com/jfinal/weixin/skywayct/FeedBackController.java
+END
+WeixinConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MyRepository/!svn/ver/4375/skywayct/src/com/jfinal/weixin/skywayct/WeixinConfig.java
+END
+WeixinMsgController.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MyRepository/!svn/ver/4085/skywayct/src/com/jfinal/weixin/skywayct/WeixinMsgController.java
+END

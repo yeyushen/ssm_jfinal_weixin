@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommissionMapper">
+	
+	<!-- 根据id删除(不是真正删除，修改dr由0变为1) -->
+	<update id="updateDrById" parameterType="pd">
+		update
+		weixin_commission
+		set 
+			dr = 1
+		where 
+		open_id = #{open_id}
+	</update>
+	
+	<!-- 根据id批量删除(批量修改dr由0变为1) -->
+	<update id="updateAllDr" parameterType="String">
+		update 
+		weixin_commission
+		set 
+			dr = 1
+		where 
+			open_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</update>
+	
+	<!-- 提现通过后增加记录 -->
+	<insert id="save" parameterType="pd">
+	INSERT INTO weixin_commission(
+	commission_id,
+	open_id,
+	commission,
+	balance,
+	create_date,
+	order_id,
+	lv,
+	dr
+	)
+    VALUES(
+    #{commission_id},
+    #{open_id},
+    #{commission},
+    #{balance},
+    #{create_date},
+    #{order_id},
+    #{lv},
+    #{dr}
+    )
+	</insert>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		w.nick_name,
+		c.commission,
+		c.order_id,
+		c.open_id,
+		c.create_date
+		from 
+		weixin_member w,
+		weixin_commission c
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					c.open_id LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					or 
+					 w.nick_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
+			and c.create_date &gt;= #{pd.lastStart} 
+		</if>
+		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
+			and c.create_date &lt;= #{pd.lastEnd} 
+		</if>
+		and w.dr = 0
+		and c.dr = 0
+		and w.openid=c.open_id  
+		order by c.create_date desc
+	</select>
+	
+	
+	<!-- 根据某字段与值查询 -->
+	<select id="listByFiled" parameterType="page" resultType="pd">
+	SELECT *,b.nick_name FROM weixin_commission a LEFT JOIN
+	weixin_member b ON a.open_id = b.openid
+	WHERE a.dr = 0 AND a.${pd.filed} = #{pd.key_value}
+	ORDER BY a.ts DESC
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>

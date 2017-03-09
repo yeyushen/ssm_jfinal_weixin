@@ -1,0 +1,665 @@
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*//////////////////// HiDPI Framework CSS Rules Start                                                                    */
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2) {
+body {
+	background-image: url(../ke01_img/bgPat-1-x2.png);
+	background-size: 150px 150px;
+}
+.mainMenuButton {
+	background-image: url(../ke01_img/mainMenuButtonBg-x2.png);
+	background-size: 24px 18px;
+}
+.mainMenuWrapper > li > a {
+	background-image: url(../ke01_img/mainMenuItemBg-x2.png);
+	background-size: 20px 72px;
+}
+.backToTopButton {
+	background-size: 48px 48px;
+}
+.nivo-directionNav a {
+	background-size: 96px 48px;
+}
+.testimonialsTitle {
+	background-image: url(../ke01_img/testimonialsTitleBg-x2.png);
+	background-size: 16px 16px;
+}
+.portfolioMenuWrapper li {
+	background-image: url(../ke01_img/portfolioFilterableMenuDecoBg-x2.png);
+	background-size: 6px 18px;
+}
+.portfolioOneExpandButton, .portfolioFilterableExpandButton, .singleProjectExpandButton {
+	background-image: url(../ke01_img/portfolioExpandButtonBg-x2.png);
+	background-size: 28px 16px;
+}
+.portfolioOneDetailsButton, .portfolioFilterableDetailsButton, .singleProjectDetailsButton {
+	background-image: url(../ke01_img/portfolioDetailsButtonBg-x2.png);
+	background-size: 28px 16px;
+}
+.smallPostMoreButton {
+	background-image: url(../ke01_img/smallPostReadMoreButtonBg-x2.png);
+	background-size: 28px 16px;
+}
+.smallPostQuote {
+	background-image: url(../ke01_img/quoteBg-x2.png);
+	background-size: 16px 16px;
+}
+#cboxClose, #cboxPrevious, #cboxNext {
+	background-image: url(../ke01_img/controlsBg-x2.png);
+	background-size: 98px 130px;
+}
+.formSuccessMessageWrapper > h4 {
+	background-image: url(../ke01_img/iconCheckmarkBg32.png);
+	background-size: 16px 16px;
+}
+.quoteWrapper > blockquote {
+	background: none;
+}
+blockquote {
+	background: url(../ke01_img/quoteBg-x2.png) 0 0 no-repeat;
+	background-size: 16px 16px;
+}
+.alertBoxWarning {
+	background-image: url(../ke01_img/alertBoxWarningBg-x2.png);
+	background-size: 16px 16px;
+}
+.alertBoxStop {
+	background-image: url(../ke01_img/alertBoxStopBg-x2.png);
+	background-size: 16px 16px;
+}
+.alertBoxGo {
+	background-image: url(../ke01_img/alertBoxGoBg-x2.png);
+	background-size: 16px 16px;
+}
+.alertBoxInfo {
+	background-image: url(../ke01_img/alertBoxInfoBg-x2.png);
+	background-size: 16px 16px;
+}
+.alertBoxButton {
+	background-image: url(../ke01_img/alertBoxButtonBg-x2.png);
+	background-size: 16px 16px;
+}
+.accordionButton .accordionButtonIcon {
+	background-image: url(../ke01_img/accordionButtonBg-x2.png);
+	background-size: 32px 32px;
+}
+.buttonArrowLeft {
+	background-image: url(../ke01_img/iconArrowLeftBg32.png);
+	background-size: 16px 16px;
+}
+.buttonArrowRight {
+	background-image: url(../ke01_img/iconArrowRightBg32.png);
+	background-size: 16px 16px;
+}
+.buttonBolt {
+	background-image: url(../ke01_img/iconBoltBg32.png);
+	background-size: 16px 16px;
+}
+.buttonCalendar {
+	background-image: url(../ke01_img/iconCalendarBg32.png);
+	background-size: 16px 16px;
+}
+.buttonCamera {
+	background-image: url(../ke01_img/iconCameraBg32.png);
+	background-size: 16px 16px;
+}
+.buttonCheckmark {
+	background-image: url(../ke01_img/iconCheckmarkBg32.png);
+	background-size: 16px 16px;
+}
+.buttonComment {
+	background-image: url(../ke01_img/iconCommentBg32.png);
+	background-size: 16px 16px;
+}
+.buttonDelete {
+	background-image: url(../ke01_img/iconDeleteBg32.png);
+	background-size: 16px 16px;
+}
+.buttonEdit {
+	background-image: url(../ke01_img/iconEditBg32.png);
+	background-size: 16px 16px;
+}
+.buttonEmail {
+	background-image: url(../ke01_img/iconEmailBg32.png);
+	background-size: 16px 16px;
+}
+.buttonExpand {
+	background-image: url(../ke01_img/iconExpandBg32.png);
+	background-size: 16px 16px;
+}
+.buttonFlag {
+	background-image: url(../ke01_img/iconFlagBg32.png);
+	background-size: 16px 16px;
+}
+.buttonGear {
+	background-image: url(../ke01_img/iconGearBg32.png);
+	background-size: 16px 16px;
+}
+.buttonGraph {
+	background-image: url(../ke01_img/iconGraphBg32.png);
+	background-size: 16px 16px;
+}
+.buttonHome {
+	background-image: url(../ke01_img/iconHomeBg32.png);
+	background-size: 16px 16px;
+}
+.buttonLocation {
+	background-image: url(../ke01_img/iconLocationBg32.png);
+	background-size: 16px 16px;
+}
+.buttonMinus {
+	background-image: url(../ke01_img/iconMinusBg32.png);
+	background-size: 16px 16px;
+}
+.buttonMobile {
+	background-image: url(../ke01_img/iconMobileBg32.png);
+	background-size: 16px 16px;
+}
+.buttonNo {
+	background-image: url(../ke01_img/iconNoBg32.png);
+	background-size: 16px 16px;
+}
+.buttonPlus {
+	background-image: url(../ke01_img/iconPlusBg32.png);
+	background-size: 16px 16px;
+}
+.buttonRefresh {
+	background-image: url(../ke01_img/iconRefreshBg32.png);
+	background-size: 16px 16px;
+}
+.buttonSearch {
+	background-image: url(../ke01_img/iconSearchBg32.png);
+	background-size: 16px 16px;
+}
+.buttonStar {
+	background-image: url(../ke01_img/iconStarBg32.png);
+	background-size: 16px 16px;
+}
+.buttonTag {
+	background-image: url(../ke01_img/iconTagBg32.png);
+	background-size: 16px 16px;
+}
+.serviceIconArrowDownLight {
+	background-image: url(../ke01_img/iconArrowDownBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconAttachLight {
+	background-image: url(../ke01_img/iconAttachBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconBoltLight {
+	background-image: url(../ke01_img/iconBoltBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCameraLight {
+	background-image: url(../ke01_img/iconCameraBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCartLight {
+	background-image: url(../ke01_img/iconCartBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconChartLight {
+	background-image: url(../ke01_img/iconChartBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCheckmarkLight {
+	background-image: url(../ke01_img/iconCheckmarkBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconClockLight {
+	background-image: url(../ke01_img/iconClockBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCommentLight {
+	background-image: url(../ke01_img/iconCommentBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconDollarLight {
+	background-image: url(../ke01_img/iconDollarBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconFilesLight {
+	background-image: url(../ke01_img/iconFilesBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconFlagLight {
+	background-image: url(../ke01_img/iconFlagBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconGearLight {
+	background-image: url(../ke01_img/iconGearBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconGlobeLight {
+	background-image: url(../ke01_img/iconGlobeBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconHeartLight {
+	background-image: url(../ke01_img/iconHeartBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconInfoLight {
+	background-image: url(../ke01_img/iconInfoBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconKeyLight {
+	background-image: url(../ke01_img/iconKeyBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconLinkLight {
+	background-image: url(../ke01_img/iconLinkBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconNoLight {
+	background-image: url(../ke01_img/iconNoBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconRefreshLight {
+	background-image: url(../ke01_img/iconRefreshBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconScreenLight {
+	background-image: url(../ke01_img/iconScreenBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconSearchLight {
+	background-image: url(../ke01_img/iconSearchBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconUserLight {
+	background-image: url(../ke01_img/iconUserBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconWarningLight {
+	background-image: url(../ke01_img/iconWarningBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconArrowDownDark {
+	background-image: url(../ke01_img/iconArrowDownBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconAttachDark {
+	background-image: url(../ke01_img/iconAttachBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconBoltDark {
+	background-image: url(../ke01_img/iconBoltBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCameraDark {
+	background-image: url(../ke01_img/iconCameraBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCartDark {
+	background-image: url(../ke01_img/iconCartBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconChartDark {
+	background-image: url(../ke01_img/iconChartBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCheckmarkDark {
+	background-image: url(../ke01_img/iconCheckmarkBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconClockDark {
+	background-image: url(../ke01_img/iconClockBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconCommentDark {
+	background-image: url(../ke01_img/iconCommentBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconDollarDark {
+	background-image: url(../ke01_img/iconDollarBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconFilesDark {
+	background-image: url(../ke01_img/iconFilesBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconFlagDark {
+	background-image: url(../ke01_img/iconFlagBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconGearDark {
+	background-image: url(../ke01_img/iconGearBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconGlobeDark {
+	background-image: url(../ke01_img/iconGlobeBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconHeartDark {
+	background-image: url(../ke01_img/iconHeartBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconInfoDark {
+	background-image: url(../ke01_img/iconInfoBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconKeyDark {
+	background-image: url(../ke01_img/iconKeyBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconLinkDark {
+	background-image: url(../ke01_img/iconLinkBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconNoDark {
+	background-image: url(../ke01_img/iconNoBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconRefreshDark {
+	background-image: url(../ke01_img/iconRefreshBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconScreenDark {
+	background-image: url(../ke01_img/iconScreenBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconSearchDark {
+	background-image: url(../ke01_img/iconSearchBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconUserDark {
+	background-image: url(../ke01_img/iconUserBg64.png);
+	background-size: 32px 32px;
+}
+.serviceIconWarningDark {
+	background-image: url(../ke01_img/iconWarningBg64.png);
+	background-size: 32px 32px;
+}
+.iconArrowLeftLight {
+	background-image: url(../ke01_img/iconArrowLeftBg32.png);
+	background-size: 16px 16px;
+}
+.iconArrowRightLight {
+	background-image: url(../ke01_img/iconArrowRightBg32.png);
+	background-size: 16px 16px;
+}
+.iconBoltLight {
+	background-image: url(../ke01_img/iconBoltBg32.png);
+	background-size: 16px 16px;
+}
+.iconCalendarLight {
+	background-image: url(../ke01_img/iconCalendarBg32.png);
+	background-size: 16px 16px;
+}
+.iconCameraLight {
+	background-image: url(../ke01_img/iconCameraBg32.png);
+	background-size: 16px 16px;
+}
+.iconCheckmarkLight {
+	background-image: url(../ke01_img/iconCheckmarkBg32.png);
+	background-size: 16px 16px;
+}
+.iconCommentLight {
+	background-image: url(../ke01_img/iconCommentBg32.png);
+	background-size: 16px 16px;
+}
+.iconDeleteLight {
+	background-image: url(../ke01_img/iconDeleteBg32.png);
+	background-size: 16px 16px;
+}
+.iconEditLight {
+	background-image: url(../ke01_img/iconEditBg32.png);
+	background-size: 16px 16px;
+}
+.iconEmailLight {
+	background-image: url(../ke01_img/iconEmailBg32.png);
+	background-size: 16px 16px;
+}
+.iconExpandLight {
+	background-image: url(../ke01_img/iconExpandBg32.png);
+	background-size: 16px 16px;
+}
+.iconFlagLight {
+	background-image: url(../ke01_img/iconFlagBg32.png);
+	background-size: 16px 16px;
+}
+.iconGearLight {
+	background-image: url(../ke01_img/iconGearBg32.png);
+	background-size: 16px 16px;
+}
+.iconGraphLight {
+	background-image: url(../ke01_img/iconGraphBg32.png);
+	background-size: 16px 16px;
+}
+.iconHomeLight {
+	background-image: url(../ke01_img/iconHomeBg32.png);
+	background-size: 16px 16px;
+}
+.iconLocationLight {
+	background-image: url(../ke01_img/iconLocationBg32.png);
+	background-size: 16px 16px;
+}
+.iconMinusLight {
+	background-image: url(../ke01_img/iconMinusBg32.png);
+	background-size: 16px 16px;
+}
+.iconMobileLight {
+	background-image: url(../ke01_img/iconMobileBg32.png);
+	background-size: 16px 16px;
+}
+.iconNoLight {
+	background-image: url(../ke01_img/iconNoBg32.png);
+	background-size: 16px 16px;
+}
+.iconPlusLight {
+	background-image: url(../ke01_img/iconPlusBg32.png);
+	background-size: 16px 16px;
+}
+.iconRefreshLight {
+	background-image: url(../ke01_img/iconRefreshBg32.png);
+	background-size: 16px 16px;
+}
+.iconSearchLight {
+	background-image: url(../ke01_img/iconSearchBg32.png);
+	background-size: 16px 16px;
+}
+.iconStarLight {
+	background-image: url(../ke01_img/iconStarBg32.png);
+	background-size: 16px 16px;
+}
+.iconTagLight {
+	background-image: url(../ke01_img/iconTagBg32.png);
+	background-size: 16px 16px;
+}
+.iconArrowLeftDark {
+	background-image: url(../ke01_img/iconArrowLeftBg32.png);
+	background-size: 16px 16px;
+}
+.iconArrowRightDark {
+	background-image: url(../ke01_img/iconArrowRightBg32.png);
+	background-size: 16px 16px;
+}
+.iconBoltDark {
+	background-image: url(../ke01_img/iconBoltBg32.png);
+	background-size: 16px 16px;
+}
+.iconCalendarDark {
+	background-image: url(../ke01_img/iconCalendarBg32.png);
+	background-size: 16px 16px;
+}
+.iconCameraDark {
+	background-image: url(../ke01_img/iconCameraBg32.png);
+	background-size: 16px 16px;
+}
+.iconCheckmarkDark {
+	background-image: url(../ke01_img/iconCheckmarkBg32.png);
+	background-size: 16px 16px;
+}
+.iconCommentDark {
+	background-image: url(../ke01_img/iconCommentBg32.png);
+	background-size: 16px 16px;
+}
+.iconDeleteDark {
+	background-image: url(../ke01_img/iconDeleteBg32.png);
+	background-size: 16px 16px;
+}
+.iconEditDark {
+	background-image: url(../ke01_img/iconEditBg32.png);
+	background-size: 16px 16px;
+}
+.iconEmailDark {
+	background-image: url(../ke01_img/iconEmailBg32.png);
+	background-size: 16px 16px;
+}
+.iconExpandDark {
+	background-image: url(../ke01_img/iconExpandBg32.png);
+	background-size: 16px 16px;
+}
+.iconFlagDark {
+	background-image: url(../ke01_img/iconFlagBg32.png);
+	background-size: 16px 16px;
+}
+.iconGearDark {
+	background-image: url(../ke01_img/iconGearBg32.png);
+	background-size: 16px 16px;
+}
+.iconGraphDark {
+	background-image: url(../ke01_img/iconGraphBg32.png);
+	background-size: 16px 16px;
+}
+.iconHomeDark {
+	background-image: url(../ke01_img/iconHomeBg32.png);
+	background-size: 16px 16px;
+}
+.iconLocationDark {
+	background-image: url(../ke01_img/iconLocationBg32.png);
+	background-size: 16px 16px;
+}
+.iconMinusDark {
+	background-image: url(../ke01_img/iconMinusBg32.png);
+	background-size: 16px 16px;
+}
+.iconMobileDark {
+	background-image: url(../ke01_img/iconMobileBg32.png);
+	background-size: 16px 16px;
+}
+.iconNoDark {
+	background-image: url(../ke01_img/iconNoBg32.png);
+	background-size: 16px 16px;
+}
+.iconPlusDark {
+	background-image: url(../ke01_img/iconPlusBg32.png);
+	background-size: 16px 16px;
+}
+.iconRefreshDark {
+	background-image: url(../ke01_img/iconRefreshBg32.png);
+	background-size: 16px 16px;
+}
+.iconSearchDark {
+	background-image: url(../ke01_img/iconSearchBg32.png);
+	background-size: 16px 16px;
+}
+.iconStarDark {
+	background-image: url(../ke01_img/iconStarBg32.png);
+	background-size: 16px 16px;
+}
+.iconTagDark {
+	background-image: url(../ke01_img/iconTagBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconFacebookLight {
+	background-image: url(../ke01_img/iconFacebookBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconRssLight {
+	background-image: url(../ke01_img/iconRssBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconDribbbleLight {
+	background-image: url(../ke01_img/iconDribbbleBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconVimeoLight {
+	background-image: url(../ke01_img/iconVimeoBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconTwitterLight {
+	background-image: url(../ke01_img/iconTwitterBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconDeviantArtLight {
+	background-image: url(../ke01_img/iconDeviantArtBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconLinkedInLight {
+	background-image: url(../ke01_img/iconLinkedInBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconYouTubeLight {
+	background-image: url(../ke01_img/iconYouTubeBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconPicasaLight {
+	background-image: url(../ke01_img/iconPicasaBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconFlickrLight {
+	background-image: url(../ke01_img/iconFlickrBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconSkypeLight {
+	background-image: url(../ke01_img/iconSkypeBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconWordPressLight {
+	background-image: url(../ke01_img/iconWordPressBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconFacebookDark {
+	background-image: url(../ke01_img/iconFacebookBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconRssDark {
+	background-image: url(../ke01_img/iconRssBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconDribbbleDark {
+	background-image: url(../ke01_img/iconDribbbleBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconVimeoDark {
+	background-image: url(../ke01_img/iconVimeoBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconTwitterDark {
+	background-image: url(../ke01_img/iconTwitterBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconDeviantArtDark {
+	background-image: url(../ke01_img/iconDeviantArtBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconLinkedInDark {
+	background-image: url(../ke01_img/iconLinkedInBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconYouTubeDark {
+	background-image: url(../ke01_img/iconYouTubeBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconPicasaDark {
+	background-image: url(../ke01_img/iconPicasaBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconFlickrDark {
+	background-image: url(../ke01_img/iconFlickrBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconSkypeDark {
+	background-image: url(../ke01_img/iconSkypeBg32.png);
+	background-size: 16px 16px;
+}
+.socialIconWordPressDark {
+	background-image: url(../ke01_img/iconWordPressBg32.png);
+	background-size: 16px 16px;
+}
+}
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*//////////////////// HiDPI Framework CSS Rules End                                                                      */
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/

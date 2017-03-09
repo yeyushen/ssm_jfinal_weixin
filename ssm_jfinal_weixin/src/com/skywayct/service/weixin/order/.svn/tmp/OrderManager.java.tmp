@@ -1,0 +1,39 @@
+package com.skywayct.service.weixin.order;
+
+import java.util.List;
+
+import com.skywayct.entity.Page;
+import com.skywayct.util.PageData;
+
+public interface OrderManager {
+	
+	/**所有订单列表
+	 * @param page
+	 * @throws Exception
+	 */
+	public List<PageData> list(Page page)throws Exception;
+<<<<<<< .mine
+	
+	/**
+	 * 统计
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	public PageData countOrder(PageData pd) throws Exception;
+	
+	
+	
+=======
+	
+	
+	/**
+	 * 导出订单信息到EXCEL
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllToExcel(PageData pd) throws Exception; 
+>>>>>>> .r492
+
+}

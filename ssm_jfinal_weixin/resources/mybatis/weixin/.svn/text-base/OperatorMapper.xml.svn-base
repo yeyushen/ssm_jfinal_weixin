@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OperatorMapper">
+
+	<resultMap type="Operator" id="operatorResultMap">
+		<id column="id" property="id" />
+		<result column="type_name" property="type_name" />
+		<result column="parent_id" property="parent_id" />
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		weixin_product_type
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		region,
+		id,
+		type_code,
+		type_name,
+		parent_id,
+		chnnl_type,
+		is_show_wx,
+		dr
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{region},
+		#{id},
+		#{type_code},
+		#{type_name},
+		#{parent_id},
+		#{chnnl_type},
+		#{dr}
+	</sql>
+
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		region,
+		id,
+		type_code,
+		type_name,
+		parent_id,
+		chnnl_type,
+		dictionaries_id,
+		is_show_wx,
+		dr
+		) values (
+		#{region},
+		#{id},
+		#{type_code},
+		#{type_name},
+		#{parent_id},
+		#{chnnl_type},
+		#{dictionaries_id},
+		#{showwx},
+		0
+		)
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where
+		id = #{id}
+	</delete>
+
+	<!-- 删除,把dr改为1 -->
+	<update id="updateDr" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		dr = 1
+		where
+		id = #{id}
+	</update>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		region = #{region},
+		type_code = #{type_code},
+		type_name = #{type_name},
+		parent_id = #{parent_id},
+		chnnl_type = #{chnnl_type},
+		dictionaries_id = #{dictionaries_id},
+		is_show_wx = #{showwx}
+		where
+		id = #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		w.region,
+		w.id,
+		w.type_code,
+		w.type_name,
+		w.parent_id,
+		w.chnnl_type,
+		w.dr,
+		w.dictionaries_id,
+		w.is_show_wx
+		from
+		weixin_product_type w
+		where
+		id = #{id}
+		and dr = 0
+	</select>
+	
+		<!-- 列表 -->
+	<select id="listProduct" parameterType="pd" resultType="pd">
+		select
+		p.product_id
+		from
+		weixin_product p
+		where
+		 p.pid = #{id}
+	</select>
+	
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		w.region,
+		w.id,
+		w.type_code,
+		w.type_name,
+		w.parent_id,
+		w.chnnl_type,
+		w.dr,
+		w.dictionaries_id,
+		w.is_show_wx,
+		d.DICTIONARIES_ID dictionariesId,
+		d.NAME dictionaries_name
+		from
+		weixin_product_type w
+		left join
+		sys_dictionaries d
+		on
+		w.dictionaries_id = d.DICTIONARIES_ID
+		where
+		1=1
+		<if test="pd.id!= null and pd.id != ''"><!-- 检索 -->
+			and w.parent_id = #{pd.id}
+		</if>
+		<if test="pd.keywords != null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			w.type_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			)
+		</if>
+		and w.dr = 0
+		order by type_name
+	</select>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select>
+	
+		<!-- 列表(全部) -->
+	<select id="listAllDictionaries" parameterType="pd" resultType="pd">
+		select
+		DICTIONARIES_ID dictionariesId,
+		NAME dictionaries_name
+		from
+		sys_dictionaries
+		where
+		BIANMA like '003%' and BIANMA not in ('003')
+	</select>
+
+	<!-- 通过ID获取其子级列表 -->
+	<select id="listSubOperatorByParentId" parameterType="String"
+		resultMap="operatorResultMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		parent_id = #{parent_id}
+		and dr = 0
+		order by type_name
+
+	</select>
+	
+	<!-- 通过ID获取其所有上级父类 -->
+	<select id="listParentbyid" parameterType="String"
+		resultMap="operatorResultMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		id = #{parent_id}
+		and dr = 0
+		order by type_name
+
+	</select>
+
+	<!-- (skywayct) -->
+</mapper>

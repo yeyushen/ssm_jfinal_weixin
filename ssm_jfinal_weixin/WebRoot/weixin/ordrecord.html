@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>充值记录</title>    
+    <meta http-equiv="Expires" CONTENT="0">  
+	<meta http-equiv="Cache-Control" CONTENT="no-cache">  
+	<meta http-equiv="Pragma" CONTENT="no-cache"> 
+	<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1" >
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+	<link href="css/main.css?v=52" type=text/css rel=stylesheet>
+	<link href="css/icon.css?v=52" type=text/css rel=stylesheet>	
+	<style>
+	html,body{height:100%;}
+	</style>
+  </head>
+  
+  <body>
+    <img id="img_qrcode" style="position:fixed;" src=""  height="100%" width="100%" /> 
+  </body>
+  
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <script type="text/javascript" src="js/skywayct.js?v=52"></script>
+  <script>
+	function loaded() {	
+		if(Request.QueryString("code"))
+		{	
+			fnloading("正在读取数据...");
+			XMLHttpURL_POST("../wxclient?code="+Request.QueryString("code")+"&url="+window.location, function(data){
+				fnloading();
+				var objdata = eval("(" + data + ")");
+				if(objdata.errcode == "-1"){
+					mAlert(objdata.errmsg);
+					return;
+				}else{
+					initWxJs(objdata.appid,objdata.timestamp,objdata.noncestr,objdata.signature,objdata.open_id);
+					fnLlczMx(1);
+				}
+			});
+		}
+		else{
+			fnPopTip("当前没有记录!"," ");
+			setTimeout(function(){
+				if (isWeiXin()){
+					WeixinJSBridge.call("closeWindow");
+				}
+			}, 1000);
+		}
+	}
+	
+	document.addEventListener('DOMContentLoaded', loaded, false);
+
+	var LlczMx_n_popwin,LlczMx_n_page = 1,LlczMx_n_totalpage;
+	function fnLlczMx(page){
+		page = page ? page : 1;
+		if(LlczMx_n_totalpage && LlczMx_n_page > LlczMx_n_totalpage){return;}
+		fnloading("加载充值记录...")
+		XMLHttpURL_POST("../ordrecord?page="+page+"&size=10", function(data){
+				fnloading()
+				var objdata = eval("(" + data + ")");
+				if(objdata.errcode == "-1"){
+					mAlert(objdata.errmsg);
+					return;
+				}
+				var shtml = "";
+			 	if(objdata.records.list.length > 0){
+			 		LlczMx_n_totalpage = objdata.records.totalPage
+			 		
+			 		for (var n = 0; n < objdata.records.list.length; n++ ){	 
+			 			var strstatus = objdata.records.list[n].status =="0" ? '<span style="padding-left:10px;color:red">充值失败<span>' : (objdata.records.list[n].status =="1" ? '<span style="padding-left:10px;color:green">充值成功<span>' : (objdata.records.list[n].status =="2" ? '<span style="padding-left:10px;color:blue">处理中<span>' : '<span style="padding-left:10px;color:gray">已退款<span>'));
+			 			var paystatus = objdata.records.list[n].paystatus =="0" ? '<span style="padding-left:10px;color:red">支付失败<span>' : (objdata.records.list[n].paystatus =="1" ? '<span style="padding-left:10px;color:green">支付成功<span>' : (objdata.records.list[n].paystatus =="3" ? '<span style="padding-left:10px;color:blue">待付款<span>' : '<span style="padding-left:10px;color:gray">已退款<span>'));
+				  		shtml += '<div class="cartBillItem"><a href="javascript:void(0);"><div class="billInfo pr30"><table><tr><td>' + objdata.records.list[n].recharge_dttm + '</td><td>'+paystatus+'</td><td align="right" class="billState">'+strstatus+'</td></tr></table></div><div class="billInfo cartSPView">';
+				  		var strorder = (objdata.records.list[n].transaction_id=="" || objdata.records.list[n].transaction_id ==null) ? ('单号：'+objdata.records.list[n].order_id) : ('微信单号 ：'+objdata.records.list[n].transaction_id);
+				  		
+				  		shtml += '<div>'+strorder+'<br>号码：' + objdata.records.list[n].phone +' ('+objdata.records.list[n].attribution+')' + '<br>套餐：'+objdata.records.list[n].note+'</div>';
+				  		shtml += '</div><div class="billInfo"><div class="fr pricecolor price" style="display:none;">￥' + formatPrice(objdata.records.list[n].settlement_price, 2) + '</div></div></a>';
+				  		
+				  		if(objdata.records.list[n].paystatus =="3")
+				  		{	
+				  			shtml += '<div class="billOperDiv">';
+				  			shtml += '<span class="redbtn cancelbtn" onclick="fnwallPay(\''+objdata.records.list[n].order_id+'\',\''+objdata.records.list[n].phone+'\')"><i class="icon-coin-yen colorf"></i> 钱包支付</span>';
+				  			shtml += '<span class="redbtn btnPay" onclick="fnweixinpay(\''+objdata.records.list[n].order_id+'\',\''+objdata.records.list[n].prepay_id+'\')"><span><i class="icon-wzf"></i></span> 微信支付</span>';
+				  			shtml += '</div>'; 
+				  		}
+				  		shtml += '<div class="billXH">' + ((page - 1) * 10 + n + 1) + '</div></div>';
+				  	}
+			 		
+			 		
+					if(!LlczMx_n_popwin)	
+						LlczMx_n_popwin = fnPopWin("充值记录", shtml, '', 'red','','',function(){},true);
+					else
+						$(LlczMx_n_popwin).find(".popWinContent").append(shtml);
+					
+	                $(LlczMx_n_popwin).find(".popWinContent").scroll(function(){
+	                	if(LlczMx_n_totalpage && LlczMx_n_page > LlczMx_n_totalpage){return;}
+	                	var scrollTop = parseInt($(this).scrollTop());
+	                	var windowHeight = parseInt($(this).height());
+	                    var scrollHeight = parseInt($(this)[0].scrollHeight);
+	                    if((scrollTop + windowHeight) >= scrollHeight-50)
+	                    {
+	                    	LlczMx_n_page +=1;
+	                    	fnLlczMx(LlczMx_n_page);
+	                    }
+	                })
+					
+				}else{
+					fnPopTip("没有任何充值记录!"," ");
+					setTimeout(function(){
+						if (isWeiXin()){
+							WeixinJSBridge.call("closeWindow");
+						}
+					}, 1000);
+				}
+		});
+	}
+	
+	
+	
+	function clearLlczMx(){
+		LlczMx_n_popwin =null;
+		LlczMx_n_page = 1;
+		LlczMx_n_totalpage=null;
+	}
+	
+	function fnweixinpay(orderid,prepayid){
+		var timer = setTimeout(function(){fnloading();}, 50000);
+		if(prepayid)
+		{
+			fnloading("请求支付中");
+			XMLHttpURL_POST("../order?paytype=1&order_id="+orderid+"&prepay_id="+prepayid, function(data){
+				var wxpay = eval("(" + data + ")");
+				localData.set("appid", wxpay.appId);
+				localData.set("timeStamp", wxpay.timeStamp);
+				localData.set("nonceStr", wxpay.nonceStr);
+				localData.set("package", wxpay.package);
+				localData.set("paySign", wxpay.paySign);
+				localData.set("orderid", wxpay.orderid);
+				
+				if(typeof WeixinJSBridge ==="undefined"){
+					if(document.addEventListener){
+						document.addEventListener("WeixinJSBridgeReady",callpay,false);
+					  	fnloading();
+					}
+				}else{
+					callpay();
+					fnloading();
+				}
+				clearInterval(timer);
+			})
+		}else{
+	        /* fnloading("请求支付中");
+			XMLHttpURL_POST("../order?paytype=2&order_id="+orderid, function(data){
+				fnloading();
+				clearInterval(timer);
+				mAlert(data);
+			}) */
+			
+		}	
+	}
+	
+	function fnwallPay(orderid,phone){
+		fnloading("请求支付中");
+		var obj_czk = fnPopDlg("钱包支付", '<div style="text-align:center;font-size:24px;"><input type="password" placeholder="请录入支付密码" id="czkPayPsw" style="height:40px;margin-top:10px;"></input><div style="text-align:center"><span class="redbtn mt12" style="width:60%">支付</span></div>',null,function(){fnloading();});
+		$("#czkPayPsw").focus();
+		$("#czkPayPsw").bind("keydown", function(){
+			 if(event.keyCode == 13){obj_czk.find(".redbtn").trigger("click");}
+		});
+		obj_czk.find(".redbtn").bind("click", function(){
+			var pPsw = $("#czkPayPsw").val() || '';
+			if(!pPsw){
+				mAlert("请录入支付密码！", function(){$("#czkPayPsw").focus();});
+				return;
+			}
+			obj_czk.remove();
+			setTimeout(function(){
+				XMLHttpURL_POST("../order?paytype=2&orderid="+orderid, function(data){
+					fnloading();
+					var result = eval("("+data+")");
+					if(result.result_code =="0")
+						mAlert(result.message,function(){clearAll();WXPAYWIN.remove();});
+					else if(result.result_code =="3")
+						mAlert(result.message,function(){localData.set("orderid",result.order_id);});
+					else if(result.result_code =="1")
+						mAlert(result.message,function(){clearAll();WXPAYWIN.remove();});
+					else if(result.result_code =="5")
+						mAlert(result.message,function(){});
+					else if(result.result_code =="6")
+						mAlert(result.message,function(){clearAll();WXPAYWIN.remove();});
+					else
+						mAlert(result.message,function(){});
+					
+				});
+			}, 200);
+		});
+	}
+	
+	function fnwallpayok(){
+		fnClosePopWin(LlczMx_n_popwin,clearLlczMx);
+		fnLlczMx(1);
+	}
+  </script>
+</html>

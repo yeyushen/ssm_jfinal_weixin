@@ -1,0 +1,58 @@
+package com.skywayct.service.weixin.order.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.skywayct.dao.DaoSupport;
+import com.skywayct.entity.Page;
+import com.skywayct.service.weixin.order.OrderManager;
+import com.skywayct.util.PageData;
+
+/** 
+ * 说明： 普通会员
+ * 创建人： 
+ * 创建时间：2016-04-19
+ * @version
+ */
+@Service("orderService")
+public class OrderService implements OrderManager{
+
+	@Resource(name = "daoSupport")
+	private DaoSupport dao;
+	
+	/**所有订单列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> list(Page page)throws Exception{
+		return (List<PageData>)dao.findForList("OrderMapper.datalistPage", page);
+	}
+
+	/**
+	 * 导出订单信息到EXCEL
+	 * @param pd
+	 * @throws Exception
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllToExcel(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return  (List<PageData>) dao.findForList("OrderMapper.listAllToExcel", pd);
+	}
+	
+	/**
+	 * 统计
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	public PageData countOrder(PageData pd) throws Exception {
+		return (PageData) dao.findForObject("OrderMapper.countOrder", pd);
+	}
+	
+}
